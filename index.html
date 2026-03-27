@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OZMAN — Track Jobs. Quote Right. Profit.</title>
-  <meta name="description" content="Stop guessing your profits. OZMAN gives Australian tradies real-time job costing, instant PDF quotes, and invoicing — all from your phone.">
-  <meta property="og:title" content="OZMAN — The Trade App That Puts Profit Back In Your Pocket">
-  <meta property="og:description" content="Track your profit without the guesswork. Built for Australian tradies.">
+  <title>OZMAN — Stop Guessing. Start Profiting.</title>
+  <meta name="description" content="OZMAN gives Australian tradies the tools to quote right, track every dollar, and actually profit from the work they're already doing.">
+  <meta property="og:title" content="OZMAN — The App Built for Australian Tradies">
+  <meta property="og:description" content="Track job costs, build quotes in seconds, and know your real profit on every job — all from your phone.">
   <meta property="og:image" content="assets/promo/01_hero.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ozmanofficial.com">
@@ -16,1061 +16,553 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#FFFFFF;--bg-alt:#F8FAFC;--bg-green:#F0FDF4;
+      --text:#0F172A;--text-2:#475569;--text-3:#94A3B8;
+      --green:#22C55E;--green-d:#16A34A;--green-l:#DCFCE7;
+      --border:#E2E8F0;--red-bg:#FEF2F2;--red:#EF4444;
+      --shadow-s:0 1px 3px rgba(0,0,0,.04);
+      --shadow-m:0 4px 20px rgba(0,0,0,.06);
+      --shadow-l:0 12px 40px rgba(0,0,0,.08);
+      --r:16px;--r-s:12px
+    }
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block}
 
-    :root {
-      --white: #ffffff;
-      --off-white: #f8f9fa;
-      --light-gray: #f1f3f5;
-      --mid-gray: #e9ecef;
-      --text-primary: #1a1a2e;
-      --text-secondary: #495057;
-      --text-muted: #868e96;
-      --green: #22c55e;
-      --green-dark: #16a34a;
-      --green-light: #dcfce7;
-      --accent: #0ea5e9;
-      --accent-light: #e0f2fe;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-      --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
-      --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
-      --radius: 16px;
-      --radius-sm: 12px;
-      --radius-xs: 8px;
-    }
+    /* === NAV === */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent;transition:all .3s}
+    .nav.scrolled{border-bottom-color:var(--border);box-shadow:var(--shadow-s)}
+    .nav-in{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .nav-logo img{width:36px;height:36px;border-radius:10px}
+    .nav-logo span{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.5px}
+    .nav-right{display:flex;align-items:center;gap:16px}
+    .nav-social{display:flex;align-items:center;color:var(--text-3);transition:color .2s}
+    .nav-social:hover{color:var(--green)}
+    .nav-social svg{width:20px;height:20px}
 
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    /* === BUTTONS === */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .2s;border-radius:100px;font-size:16px;line-height:1}
+    .btn-g{background:var(--green);color:#fff;padding:14px 32px;box-shadow:0 4px 14px rgba(34,197,94,.3)}
+    .btn-g:hover{background:var(--green-d);transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,.35)}
+    .btn-g:active{transform:translateY(0)}
+    .btn-lg{padding:18px 44px;font-size:18px}
+    .btn-sm{padding:10px 22px;font-size:14px}
+    .btn-o{background:transparent;color:var(--text);border:2px solid var(--border);padding:14px 28px}
+    .btn-o:hover{border-color:var(--green);color:var(--green-d)}
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text-primary);
-      background: var(--white);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* === LAYOUT === */
+    .sec{padding:96px 24px}
+    .sec-alt{background:var(--bg-alt)}
+    .con{max-width:1120px;margin:0 auto}
+    .label{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:14px}
+    .title{font-size:clamp(28px,5vw,48px);font-weight:800;line-height:1.1;letter-spacing:-1px;color:var(--text);margin-bottom:16px}
+    .sub{font-size:clamp(16px,2.2vw,20px);color:var(--text-2);line-height:1.65;max-width:580px}
+    .tc{text-align:center}.mx{margin-left:auto;margin-right:auto}
 
-    /* ===== STICKY CTA ===== */
-    .sticky-cta {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 12px 20px;
-      border-top: 1px solid var(--mid-gray);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      transform: translateY(100%);
-      transition: transform 0.3s ease;
-    }
-    .sticky-cta.visible { transform: translateY(0); }
-    .sticky-cta .cta-text {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      display: none;
-    }
-    @media (min-width: 480px) {
-      .sticky-cta .cta-text { display: block; }
-    }
+    /* === HERO === */
+    .hero{padding:130px 24px 80px;background:linear-gradient(180deg,#fff 0%,var(--bg-green) 100%);overflow:hidden}
+    .hero .con{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .hero-c{max-width:540px}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-l);color:var(--green-d);font-size:13px;font-weight:700;padding:6px 14px;border-radius:100px;margin-bottom:24px}
+    .hero-badge svg{width:14px;height:14px}
+    .hero-t{font-size:clamp(34px,5.5vw,58px);font-weight:900;line-height:1.06;letter-spacing:-1.5px;margin-bottom:22px}
+    .hero-t .hl{background:linear-gradient(135deg,var(--green),#059669);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{font-size:18px;color:var(--text-2);line-height:1.7;margin-bottom:32px}
+    .hero-ctas{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+    .hero-stores{display:flex;gap:12px}
+    .hero-stores img{height:44px;border-radius:8px;transition:transform .2s}
+    .hero-stores img:hover{transform:scale(1.05)}
+    .hero-trust{font-size:13px;color:var(--text-3);margin-top:6px}
+    .hero-trust b{color:var(--text-2)}
+    .hero-v{display:flex;justify-content:center;position:relative}
+    .hero-v img{width:100%;max-width:480px;border-radius:20px;filter:drop-shadow(0 24px 64px rgba(0,0,0,.12))}
 
-    /* ===== BUTTONS ===== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      border-radius: 50px;
-      font-size: 16px;
-    }
-    .btn-primary {
-      background: var(--green);
-      color: var(--white);
-      padding: 16px 36px;
-      font-size: 17px;
-      box-shadow: 0 4px 14px rgba(34,197,94,0.35);
-    }
-    .btn-primary:hover {
-      background: var(--green-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(34,197,94,0.4);
-    }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-secondary {
-      background: var(--text-primary);
-      color: var(--white);
-      padding: 14px 28px;
-    }
-    .btn-secondary:hover { background: #2d2d4a; transform: translateY(-1px); }
-    .btn-sm {
-      padding: 12px 24px;
-      font-size: 15px;
-    }
-    .btn-outline {
-      background: transparent;
-      color: var(--text-primary);
-      border: 2px solid var(--mid-gray);
-      padding: 14px 28px;
-    }
-    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+    /* === TRUST === */
+    .trust{padding:44px 24px;border-bottom:1px solid var(--border)}
+    .trust-in{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+    .trust-n{font-size:26px;font-weight:800;color:var(--green);letter-spacing:-.5px}
+    .trust-l{font-size:13px;color:var(--text-3);margin-top:2px;font-weight:500}
 
-    /* ===== NAV ===== */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      transition: box-shadow 0.3s ease;
-    }
-    .nav.scrolled { box-shadow: var(--shadow-sm); }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 14px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-    }
-    .nav-logo img { width: 38px; height: 38px; border-radius: 10px; }
-    .nav-logo span { font-size: 20px; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px; }
-    .nav-cta .btn { padding: 10px 22px; font-size: 14px; }
+    /* === PAIN === */
+    .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+    .pain-c{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-s);padding:28px;display:flex;gap:16px;align-items:flex-start;transition:all .25s}
+    .pain-c:hover{border-color:var(--red);background:var(--red-bg);box-shadow:var(--shadow-m)}
+    .pain-i{width:44px;height:44px;min-width:44px;border-radius:12px;background:var(--red-bg);display:flex;align-items:center;justify-content:center;font-size:20px}
+    .pain-c h3{font-size:16px;font-weight:700;margin-bottom:4px;line-height:1.4}
+    .pain-c p{font-size:14px;color:var(--text-2);line-height:1.55}
+    .pain-close{text-align:center;margin-top:48px;font-size:20px;font-weight:600;color:var(--text-2)}
+    .pain-close em{font-style:normal;color:var(--green);font-weight:700}
 
-    /* ===== SECTIONS ===== */
-    section { padding: 80px 24px; }
-    @media (min-width: 768px) { section { padding: 100px 40px; } }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      display: inline-block;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--green);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(28px, 5vw, 44px);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      color: var(--text-primary);
-      margin-bottom: 16px;
-    }
-    .section-subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      max-width: 600px;
-    }
-    .text-center { text-align: center; }
-    .mx-auto { margin-left: auto; margin-right: auto; }
+    /* === SOLUTION === */
+    .sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+    .sol-c{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s}
+    .sol-c:hover{transform:translateY(-6px);box-shadow:var(--shadow-l)}
+    .sol-c img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--bg-alt)}
+    .sol-body{padding:24px}
+    .sol-body h3{font-size:19px;font-weight:700;margin-bottom:6px}
+    .sol-body p{font-size:15px;color:var(--text-2);line-height:1.6}
 
-    /* ===== HERO ===== */
-    .hero {
-      padding-top: 120px;
-      padding-bottom: 60px;
-      background: linear-gradient(180deg, var(--white) 0%, var(--off-white) 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -200px;
-      right: -200px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .hero .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 40px;
-    }
-    .hero-content { max-width: 640px; }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--green-light);
-      color: var(--green-dark);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 50px;
-      margin-bottom: 20px;
-    }
-    .hero-badge svg { width: 14px; height: 14px; }
-    .hero-title {
-      font-size: clamp(32px, 6vw, 56px);
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -1px;
-      color: var(--text-primary);
-      margin-bottom: 20px;
-    }
-    .hero-title .highlight {
-      background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-subtitle {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 32px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero-ctas {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-    .hero-ctas .store-badges {
-      display: flex;
-      gap: 12px;
-      margin-top: 4px;
-    }
-    .hero-ctas .store-badges img { height: 44px; border-radius: 8px; transition: transform 0.2s; }
-    .hero-ctas .store-badges img:hover { transform: scale(1.05); }
-    .hero-trust {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 8px;
-    }
-    .hero-visual {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-    }
-    .hero-visual img {
-      width: 100%;
-      height: auto;
-      border-radius: var(--radius);
-    }
+    /* === STEPS === */
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px}
+    .step{text-align:center;padding:32px 20px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border)}
+    .step-n{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+    .step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+    .step p{font-size:15px;color:var(--text-2);line-height:1.6}
 
-    /* ===== LOGO BAR ===== */
-    .logo-bar {
-      padding: 40px 24px;
-      background: var(--white);
-      border-top: 1px solid var(--mid-gray);
-      border-bottom: 1px solid var(--mid-gray);
-    }
-    .logo-bar p {
-      text-align: center;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 24px;
-    }
-    .logo-bar-stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .logo-bar-stat {
-      text-align: center;
-    }
-    .logo-bar-stat .number {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--text-primary);
-    }
-    .logo-bar-stat .label {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
+    /* === FEATURES === */
+    .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+    .feat-c{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);transition:all .3s;background:var(--bg)}
+    .feat-c:hover{transform:translateY(-4px);box-shadow:var(--shadow-l)}
+    .feat-c img{width:100%}
 
-    /* ===== PAIN SECTION ===== */
-    .pain {
-      background: var(--off-white);
-    }
-    .pain-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 40px;
-    }
-    @media (min-width: 600px) {
-      .pain-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .pain-card {
-      background: var(--white);
-      border: 1px solid var(--mid-gray);
-      border-radius: var(--radius-sm);
-      padding: 24px;
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-      transition: box-shadow 0.2s;
-    }
-    .pain-card:hover { box-shadow: var(--shadow-md); }
-    .pain-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: #fef2f2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 20px;
-    }
-    .pain-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .pain-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    /* === OBJECTIONS === */
+    .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+    .obj-c{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-s);padding:28px;transition:all .25s}
+    .obj-c:hover{border-color:var(--green);box-shadow:var(--shadow-m)}
+    .obj-q{font-size:14px;color:var(--text-3);font-style:italic;margin-bottom:12px;padding-left:16px;border-left:3px solid var(--border)}
+    .obj-a{font-size:16px;font-weight:600;color:var(--text);line-height:1.5}
 
-    /* ===== SOLUTION / FEATURES ===== */
-    .features { background: var(--white); }
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-top: 48px;
-    }
-    @media (min-width: 600px) {
-      .features-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (min-width: 900px) {
-      .features-grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-    .feature-card {
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--white);
-      border: 1px solid var(--mid-gray);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-    .feature-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    /* === SCREENSHOTS === */
+    .ss-track{display:flex;gap:20px;margin-top:48px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 24px 20px;scrollbar-width:none}
+    .ss-track::-webkit-scrollbar{display:none}
+    .ss-item{flex:0 0 240px;scroll-snap-align:center;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-m);transition:transform .3s}
+    .ss-item:hover{transform:scale(1.03)}
+    .ss-item img{width:100%}
 
-    /* ===== HOW IT WORKS ===== */
-    .how-it-works { background: var(--off-white); }
-    .steps {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 48px;
-      counter-reset: step;
-    }
-    @media (min-width: 700px) {
-      .steps { grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
-    }
-    .step {
-      text-align: center;
-      padding: 32px 24px;
-      background: var(--white);
-      border-radius: var(--radius);
-      border: 1px solid var(--mid-gray);
-      position: relative;
-      counter-increment: step;
-    }
-    .step::before {
-      content: counter(step);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--green);
-      color: var(--white);
-      font-size: 20px;
-      font-weight: 800;
-      margin: 0 auto 16px;
-    }
-    .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .step p { font-size: 15px; color: var(--text-secondary); }
+    /* === TESTIMONIALS === */
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+    .test-c{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:28px}
+    .test-stars{color:#FBBF24;font-size:18px;margin-bottom:14px;letter-spacing:2px}
+    .test-c blockquote{font-size:15px;color:var(--text-2);line-height:1.7;margin-bottom:18px;font-style:italic}
+    .test-author{font-size:14px;font-weight:600;color:var(--green-d)}
 
-    /* ===== COMPARISON ===== */
-    .comparison { background: var(--white); }
-    .comparison-table {
-      width: 100%;
-      max-width: 700px;
-      margin: 40px auto 0;
-      border-collapse: separate;
-      border-spacing: 0;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      border: 1px solid var(--mid-gray);
-      font-size: 15px;
-    }
-    .comparison-table thead th {
-      padding: 16px 20px;
-      font-weight: 700;
-      text-align: left;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .comparison-table thead th:first-child { background: #f8f9fa; color: var(--text-muted); }
-    .comparison-table thead th:nth-child(2) { background: #fef2f2; color: #dc2626; }
-    .comparison-table thead th:nth-child(3) { background: var(--green-light); color: var(--green-dark); }
-    .comparison-table td {
-      padding: 14px 20px;
-      border-top: 1px solid var(--mid-gray);
-    }
-    .comparison-table tr td:first-child { font-weight: 600; color: var(--text-primary); }
-    .comparison-table tr td:nth-child(2) { color: #dc2626; }
-    .comparison-table tr td:nth-child(3) { color: var(--green-dark); font-weight: 600; }
-    .comparison-table tr:hover td { background: var(--off-white); }
+    /* === PROMO === */
+    .promo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+    .promo-i{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-m);transition:transform .25s}
+    .promo-i:hover{transform:translateY(-4px)}
+    .promo-i img{width:100%}
 
-    /* ===== SCREENSHOTS CAROUSEL ===== */
-    .screenshots { background: var(--off-white); overflow: hidden; }
-    .screenshot-track {
-      display: flex;
-      gap: 20px;
-      margin-top: 48px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 24px 20px;
-      scrollbar-width: none;
-    }
-    .screenshot-track::-webkit-scrollbar { display: none; }
-    .screenshot-item {
-      flex: 0 0 260px;
-      scroll-snap-align: center;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      transition: transform 0.3s ease;
-    }
-    .screenshot-item:hover { transform: scale(1.03); }
-    .screenshot-item img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    /* === FINAL CTA === */
+    .final{padding:100px 24px 120px;background:linear-gradient(180deg,var(--bg-alt) 0%,var(--bg-green) 50%,var(--bg) 100%);text-align:center}
+    .final .title{max-width:560px;margin:0 auto 16px}
+    .final .sub{margin:0 auto 36px;text-align:center}
+    .final-stores{display:flex;justify-content:center;gap:14px;margin-top:24px}
+    .final-stores img{height:48px;border-radius:8px;transition:transform .2s}
+    .final-stores img:hover{transform:scale(1.05)}
+    .final-note{margin-top:28px;font-size:14px;color:var(--text-3)}
 
-    /* ===== BENEFITS ===== */
-    .benefits { background: var(--white); }
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-top: 40px;
-    }
-    @media (min-width: 600px) {
-      .benefits-grid { grid-template-columns: 1fr 1fr; }
-    }
-    .benefit-card {
-      padding: 28px;
-      border-radius: var(--radius-sm);
-      background: var(--off-white);
-      border: 1px solid var(--mid-gray);
-    }
-    .benefit-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: var(--green-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      margin-bottom: 16px;
-    }
-    .benefit-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-    .benefit-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    /* === FOOTER === */
+    .footer{padding:40px 24px;border-top:1px solid var(--border);background:var(--bg)}
+    .footer-in{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+    .footer-l{display:flex;align-items:center;gap:8px}
+    .footer-l img{width:28px;height:28px;border-radius:6px}
+    .footer-l span{font-weight:700;font-size:16px}
+    .footer-links{display:flex;gap:20px;flex-wrap:wrap}
+    .footer-links a{font-size:13px;color:var(--text-3);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:var(--green)}
+    .footer-copy{width:100%;text-align:center;font-size:12px;color:var(--text-3);margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
 
-    /* ===== SOCIAL PROOF ===== */
-    .social-proof {
-      background: var(--text-primary);
-      color: var(--white);
-    }
-    .social-proof .section-label { color: var(--green); }
-    .social-proof .section-title { color: var(--white); }
-    .social-proof .section-subtitle { color: rgba(255,255,255,0.7); }
-    .proof-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      margin-top: 40px;
-    }
-    @media (min-width: 600px) {
-      .proof-grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-    .proof-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius-sm);
-      padding: 28px;
-    }
-    .proof-stars { color: #fbbf24; font-size: 18px; margin-bottom: 12px; }
-    .proof-card p { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
-    .proof-author { font-size: 14px; font-weight: 600; color: var(--green); }
+    /* === STICKY === */
+    .sticky{position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:12px;transform:translateY(100%);transition:transform .3s}
+    .sticky.show{transform:translateY(0)}
+    .sticky-txt{font-size:14px;font-weight:600;color:var(--text);display:none}
 
-    /* ===== PROMO GALLERY ===== */
-    .promo-gallery { background: var(--off-white); }
-    .promo-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-      margin-top: 40px;
-    }
-    @media (min-width: 600px) {
-      .promo-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (min-width: 900px) {
-      .promo-grid { grid-template-columns: 1fr 1fr 1fr; }
-    }
-    .promo-item {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-      transition: transform 0.25s ease;
-    }
-    .promo-item:hover { transform: translateY(-4px); }
-    .promo-item img { width: 100%; height: auto; display: block; }
+    /* === ANIMATIONS === */
+    .fu{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+    .fu.vis{opacity:1;transform:translateY(0)}
 
-    /* ===== FINAL CTA ===== */
-    .final-cta {
-      background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #e0f2fe 100%);
-      text-align: center;
-      padding-bottom: 120px;
+    /* === RESPONSIVE === */
+    @media(max-width:1024px){
+      .hero .con{grid-template-columns:1fr;text-align:center;gap:40px}
+      .hero-c{max-width:100%;margin:0 auto}
+      .hero-ctas{align-items:center}
+      .sol-grid{grid-template-columns:1fr 1fr}
+      .feat-grid{grid-template-columns:1fr 1fr}
+      .promo-grid{grid-template-columns:1fr 1fr}
     }
-    .final-cta .section-title { margin-bottom: 16px; }
-    .final-cta .section-subtitle { margin: 0 auto 32px; }
-    .final-cta-buttons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+    @media(max-width:768px){
+      .sec{padding:64px 20px}
+      .hero{padding:100px 20px 56px}
+      .trust-in{grid-template-columns:repeat(2,1fr);gap:20px}
+      .pain-grid,.obj-grid{grid-template-columns:1fr}
+      .sol-grid,.steps-grid,.test-grid{grid-template-columns:1fr}
+      .feat-grid{grid-template-columns:1fr;max-width:380px;margin-left:auto;margin-right:auto;margin-top:40px}
+      .promo-grid{grid-template-columns:1fr 1fr}
+      .hero-v img{max-width:300px}
+      .sticky{display:flex}
+      body{padding-bottom:68px}
     }
-    .final-cta .store-badges {
-      display: flex;
-      gap: 12px;
-    }
-    .final-cta .store-badges img { height: 48px; border-radius: 8px; transition: transform 0.2s; }
-    .final-cta .store-badges img:hover { transform: scale(1.05); }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      background: var(--text-primary);
-      color: rgba(255,255,255,0.6);
-      padding: 40px 24px;
-      text-align: center;
-      font-size: 14px;
-    }
-    .footer-inner {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .footer-logo img { width: 32px; height: 32px; border-radius: 8px; }
-    .footer-logo span { font-size: 18px; font-weight: 700; color: var(--white); }
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--white); }
-
-    /* ===== ANIMATIONS ===== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (min-width: 900px) {
-      .hero .container {
-        flex-direction: row;
-        text-align: left;
-        gap: 60px;
-      }
-      .hero-content { flex: 1; }
-      .hero-subtitle { margin-left: 0; margin-right: 0; }
-      .hero-ctas { align-items: flex-start; }
-      .hero-visual { flex: 1; max-width: 500px; }
+    @media(min-width:769px){.sticky{display:none!important}}
+    @media(min-width:480px){.sticky-txt{display:block}}
+    @media(max-width:480px){
+      .hero-t{font-size:30px;letter-spacing:-.8px}
+      .title{font-size:26px;letter-spacing:-.5px}
+      .trust-n{font-size:22px}
+      .promo-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <img src="assets/ozman-icon.png" alt="OZMAN">
-        <span>OZMAN</span>
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#" class="nav-logo">
+      <img src="assets/ozman-icon.png" alt="OZMAN">
+      <span>OZMAN</span>
+    </a>
+    <div class="nav-right">
+      <a href="https://www.instagram.com/ozmannofficial?igsh=dHkyaDE4cndhaXA%3D&utm_source=qr" target="_blank" rel="noopener" class="nav-social" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
       </a>
-      <div class="nav-cta" style="display:flex;align-items:center;gap:14px;">
-        <a href="https://www.instagram.com/ozmannofficial?igsh=dHkyaDE4cndhaXA%3D&utm_source=qr" target="_blank" rel="noopener" style="display:flex;align-items:center;color:var(--text-muted);transition:color 0.2s;" aria-label="Instagram">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <a href="https://www.facebook.com/share/1J6ujHSk2w/?mibextid=wwXIfr" target="_blank" rel="noopener" style="display:flex;align-items:center;color:var(--text-muted);transition:color 0.2s;" aria-label="Facebook">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="#download" class="btn btn-primary btn-sm">Start Free Trial</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content fade-up">
-        <div class="hero-badge">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-          Built for Australian Tradies
-        </div>
-        <h1 class="hero-title">
-          Track your profit<br><span class="highlight">without the guesswork</span>
-        </h1>
-        <p class="hero-subtitle">
-          Know exactly what you're making on every job — without spreadsheets, complicated systems, or staying up at night figuring it out.
-        </p>
-        <div class="hero-ctas">
-          <a href="#download" class="btn btn-primary">Start Free Trial</a>
-          <div class="store-badges">
-            <a href="#download"><img src="assets/ios-logo.png" alt="Download on App Store"></a>
-            <a href="#download"><img src="assets/google-play-logo.png" alt="Get it on Google Play"></a>
-          </div>
-          <p class="hero-trust">7-day free trial. No credit card required.</p>
-        </div>
-      </div>
-      <div class="hero-visual fade-up">
-        <img src="assets/promo/01_hero.png" alt="OZMAN App Dashboard" loading="eager">
-      </div>
-    </div>
-  </section>
-
-  <!-- TRUST BAR -->
-  <div class="logo-bar fade-up">
-    <p>Trusted by tradies across Australia</p>
-    <div class="logo-bar-stats">
-      <div class="logo-bar-stat">
-        <div class="number">100%</div>
-        <div class="label">Australian Made</div>
-      </div>
-      <div class="logo-bar-stat">
-        <div class="number">GST</div>
-        <div class="label">Built-In Calculations</div>
-      </div>
-      <div class="logo-bar-stat">
-        <div class="number">30sec</div>
-        <div class="label">Quote Generation</div>
-      </div>
-      <div class="logo-bar-stat">
-        <div class="number">24/7</div>
-        <div class="label">Access Anywhere</div>
-      </div>
+      <a href="https://www.facebook.com/share/1J6ujHSk2w/?mibextid=wwXIfr" target="_blank" rel="noopener" class="nav-social" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </a>
+      <a href="#download" class="btn btn-g btn-sm">Start Free Trial</a>
     </div>
   </div>
+</nav>
 
-  <!-- PAIN SECTION -->
-  <section class="pain">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">The Problem</span>
-        <h2 class="section-title">Most tradies aren't losing work —<br>they're losing money</h2>
-        <p class="section-subtitle mx-auto">You're putting in the hours, but you don't actually know what you're making. Sound familiar?</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="con">
+    <div class="hero-c fu">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        Built for Australian Tradies
       </div>
-      <div class="pain-grid">
-        <div class="pain-card fade-up">
-          <div class="pain-icon">😤</div>
-          <div>
-            <h3>Guessing quotes</h3>
-            <p>Pricing jobs off gut feel and hoping you got it right. One wrong quote and your margin's gone.</p>
-          </div>
+      <h1 class="hero-t">Stop guessing.<br><span class="hl">Start profiting.</span></h1>
+      <p class="hero-sub">Track job costs, build quotes in seconds, and know your real profit on every job — all from your phone. No spreadsheets. No stress.</p>
+      <div class="hero-ctas">
+        <a href="#download" class="btn btn-g btn-lg">Download Free<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <div class="hero-stores">
+          <a href="#download"><img src="assets/ios-logo.png" alt="Download on App Store"></a>
+          <a href="#download"><img src="assets/google-play-logo.png" alt="Get it on Google Play"></a>
         </div>
-        <div class="pain-card fade-up">
-          <div class="pain-icon">💸</div>
-          <div>
-            <h3>Losing money without realising</h3>
-            <p>Finishing jobs and not knowing if you actually made money until it's too late to fix.</p>
-          </div>
+        <p class="hero-trust">7-day free trial · No credit card · <b>iPhone &amp; Android</b></p>
+      </div>
+    </div>
+    <div class="hero-v fu">
+      <img src="assets/promo/01_hero.png" alt="OZMAN App" loading="eager">
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust fu">
+  <div class="trust-in">
+    <div><div class="trust-n">100%</div><div class="trust-l">Australian Made</div></div>
+    <div><div class="trust-n">30sec</div><div class="trust-l">Quote Generation</div></div>
+    <div><div class="trust-n">GST</div><div class="trust-l">Built-In Automatically</div></div>
+    <div><div class="trust-n">24/7</div><div class="trust-l">Access Anywhere</div></div>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<section class="sec sec-alt">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Sound Familiar?</span>
+      <h2 class="title">The problems every tradie knows</h2>
+      <p class="sub mx">You're great at your trade. But the business side? That's where the money disappears.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-c fu">
+        <div class="pain-i">😤</div>
+        <div>
+          <h3>Guessing your quotes</h3>
+          <p>Pricing jobs off gut feel and hoping you got it right. One wrong quote and your margin's gone.</p>
         </div>
-        <div class="pain-card fade-up">
-          <div class="pain-icon">📝</div>
-          <div>
-            <h3>No clear cost breakdown</h3>
-            <p>Tracking costs in your head, phone notes, or the back of a receipt. Nothing organised.</p>
-          </div>
+      </div>
+      <div class="pain-c fu">
+        <div class="pain-i">💸</div>
+        <div>
+          <h3>Losing money without realising</h3>
+          <p>You finish a job, get paid, but after materials, labour and overheads — did you actually profit?</p>
         </div>
-        <div class="pain-card fade-up">
-          <div class="pain-icon">🤯</div>
-          <div>
-            <h3>End of week confusion</h3>
-            <p>Getting to Friday with no idea what you earned, what you spent, or if you're ahead.</p>
-          </div>
+      </div>
+      <div class="pain-c fu">
+        <div class="pain-i">📝</div>
+        <div>
+          <h3>Costs all over the place</h3>
+          <p>Tracking costs in your head, phone notes, or the back of a receipt. Nothing's organised.</p>
+        </div>
+      </div>
+      <div class="pain-c fu">
+        <div class="pain-i">🤯</div>
+        <div>
+          <h3>End of week confusion</h3>
+          <p>Getting to Friday with no idea what you earned, what you spent, or if you're actually ahead.</p>
         </div>
       </div>
     </div>
-  </section>
+    <p class="pain-close fu">You're not bad at business. You just don't have <em>the right tool yet.</em></p>
+  </div>
+</section>
 
-  <!-- FEATURES / SOLUTION -->
-  <section class="features" id="features">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">The Solution</span>
-        <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
-        <p class="section-subtitle mx-auto">Track your jobs, costs, and profit in one place — built for real tradies, not office workers.</p>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc01_projects_screen.png" alt="Track Every Job" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc02_quote_summary.png" alt="Professional Quotes" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc03_earnings_dashboard.png" alt="Earnings Dashboard" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc04_building_estimator.png" alt="Building Estimator" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc05_workers_pay_rates.png" alt="Workers & Pay Rates" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc06_project_breakdown.png" alt="Project Breakdown" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc07_invoice_generator.png" alt="Invoice Generator" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc08_day_rate_job.png" alt="Day Rate Jobs" loading="lazy">
-        </div>
-        <div class="feature-card fade-up">
-          <img src="assets/features/fc09_home_dashboard.png" alt="Home Dashboard" loading="lazy">
-        </div>
-      </div>
+<!-- SOLUTION -->
+<section class="sec">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">The Solution</span>
+      <h2 class="title">One app. Complete control.</h2>
+      <p class="sub mx">OZMAN handles the business side so you can focus on the work you're good at.</p>
     </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="how-it-works">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">How It Works</span>
-        <h2 class="section-title">Up and running in 3 steps</h2>
-        <p class="section-subtitle mx-auto">No complicated setup. No learning curve. Just open the app and go.</p>
-      </div>
-      <div class="steps">
-        <div class="step fade-up">
-          <h3>Add your job</h3>
-          <p>Create a project in seconds. Name it, set your quote, and start tracking.</p>
-        </div>
-        <div class="step fade-up">
-          <h3>Enter your costs</h3>
-          <p>Log labour, materials, and overheads as you go. On-site, in the ute, wherever.</p>
-        </div>
-        <div class="step fade-up">
-          <h3>See your profit instantly</h3>
-          <p>Real-time breakdown of what you've spent vs what you quoted. No surprises.</p>
+    <div class="sol-grid">
+      <div class="sol-c fu">
+        <img src="assets/screenshots/screen3.png" alt="Quote Builder" loading="lazy">
+        <div class="sol-body">
+          <h3>Quote with confidence</h3>
+          <p>Built-in margins, GST, and overheads. Send professional PDF quotes from your phone in seconds.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- COMPARISON -->
-  <section class="comparison">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">Why Switch</span>
-        <h2 class="section-title">Why tradies are switching to OZMAN</h2>
-        <p class="section-subtitle mx-auto">Most tools overcomplicate everything. OZMAN keeps it simple.</p>
-      </div>
-      <table class="comparison-table fade-up">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Other Tools</th>
-            <th>OZMAN</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Setup</td>
-            <td>Complicated onboarding</td>
-            <td>Ready in 30 seconds</td>
-          </tr>
-          <tr>
-            <td>Usability</td>
-            <td>Built for office workers</td>
-            <td>Built for tradies on-site</td>
-          </tr>
-          <tr>
-            <td>Features</td>
-            <td>Bloated with stuff you don't need</td>
-            <td>Only what matters</td>
-          </tr>
-          <tr>
-            <td>GST</td>
-            <td>Manual calculations</td>
-            <td>Inc/Ex GST automatic</td>
-          </tr>
-          <tr>
-            <td>Price</td>
-            <td>$150–$300/month</td>
-            <td>Built for value</td>
-          </tr>
-          <tr>
-            <td>Who built it</td>
-            <td>Tech companies overseas</td>
-            <td>Australian, trade industry</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- APP SCREENSHOTS CAROUSEL -->
-  <section class="screenshots">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">See It In Action</span>
-        <h2 class="section-title">Built to work on your phone</h2>
-        <p class="section-subtitle mx-auto">Clean, simple screens designed for one-handed use on the job site.</p>
-      </div>
-    </div>
-    <div class="screenshot-track fade-up">
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-02.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-03.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-04.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-05.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-06.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-07.png" alt="OZMAN Screenshot" loading="lazy"></div>
-      <div class="screenshot-item"><img src="assets/screenshots-new/screen-08.png" alt="OZMAN Screenshot" loading="lazy"></div>
-    </div>
-  </section>
-
-  <!-- BENEFITS -->
-  <section class="benefits">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">Why It Matters</span>
-        <h2 class="section-title">Less stress. More control.</h2>
-        <p class="section-subtitle mx-auto">Know your numbers without staying up at night figuring it out.</p>
-      </div>
-      <div class="benefits-grid">
-        <div class="benefit-card fade-up">
-          <div class="benefit-icon">💪</div>
-          <h3>Confidence in every quote</h3>
-          <p>Price jobs correctly the first time with built-in margin and GST calculators. No more second-guessing.</p>
+      <div class="sol-c fu">
+        <img src="assets/screenshots/screen2.png" alt="Job Tracking" loading="lazy">
+        <div class="sol-body">
+          <h3>Track every dollar</h3>
+          <p>Real-time cost tracking per job. Labour, materials, overheads — nothing slips through the cracks.</p>
         </div>
-        <div class="benefit-card fade-up">
-          <div class="benefit-icon">📊</div>
-          <h3>Clarity on every job</h3>
-          <p>Real-time cost tracking so you always know where you stand — before the job is even finished.</p>
-        </div>
-        <div class="benefit-card fade-up">
-          <div class="benefit-icon">🎯</div>
-          <h3>No more guessing</h3>
+      </div>
+      <div class="sol-c fu">
+        <img src="assets/screenshots/screen5.png" alt="Earnings" loading="lazy">
+        <div class="sol-body">
+          <h3>Know your real profit</h3>
           <p>See exactly what you've earned, what you've spent, and what's left. Every week. Every job.</p>
         </div>
-        <div class="benefit-card fade-up">
-          <div class="benefit-icon">🚀</div>
-          <h3>Grow your business</h3>
-          <p>Take on more jobs, hire workers, and build a real business — with the numbers to back it up.</p>
-        </div>
       </div>
     </div>
-  </section>
-
-  <!-- PROMO GALLERY -->
-  <section class="promo-gallery">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">Built Different</span>
-        <h2 class="section-title">Designed for the tools, not the office</h2>
-        <p class="section-subtitle mx-auto">Every feature built from real trade industry experience.</p>
-      </div>
-      <div class="promo-grid">
-        <div class="promo-item fade-up"><img src="assets/promo/03_financial.png" alt="Financial Tracking" loading="lazy"></div>
-        <div class="promo-item fade-up"><img src="assets/promo/04_quotes.png" alt="Quoting" loading="lazy"></div>
-        <div class="promo-item fade-up"><img src="assets/promo/05_building_cost.png" alt="Building Costs" loading="lazy"></div>
-        <div class="promo-item fade-up"><img src="assets/promo/06_earnings.png" alt="Earnings" loading="lazy"></div>
-        <div class="promo-item fade-up"><img src="assets/promo/07_award_rates.png" alt="Award Rates" loading="lazy"></div>
-        <div class="promo-item fade-up"><img src="assets/promo/08_safety.png" alt="Safety" loading="lazy"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOCIAL PROOF -->
-  <section class="social-proof">
-    <div class="container">
-      <div class="text-center fade-up">
-        <span class="section-label">Social Proof</span>
-        <h2 class="section-title">Built by a tradie, for tradies</h2>
-        <p class="section-subtitle mx-auto">Designed from real on-site experience — not from behind a desk.</p>
-      </div>
-      <div class="proof-grid">
-        <div class="proof-card fade-up">
-          <div class="proof-stars">★★★★★</div>
-          <p>"Finally an app that actually makes sense for tradies. I know exactly what I'm making on every job now."</p>
-          <div class="proof-author">— Builder, Sydney NSW</div>
-        </div>
-        <div class="proof-card fade-up">
-          <div class="proof-stars">★★★★★</div>
-          <p>"I was losing money on jobs without even realising. OZMAN showed me where every dollar was going."</p>
-          <div class="proof-author">— Electrician, Melbourne VIC</div>
-        </div>
-        <div class="proof-card fade-up">
-          <div class="proof-stars">★★★★★</div>
-          <p>"The quoting tool alone is worth it. Professional PDFs in seconds — clients take me more seriously now."</p>
-          <div class="proof-author">— Plumber, Brisbane QLD</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section class="final-cta" id="download">
-    <div class="container">
-      <div class="fade-up">
-        <span class="section-label">Get Started</span>
-        <h2 class="section-title">Start tracking your profit today</h2>
-        <p class="section-subtitle mx-auto">7-day free trial. No credit card. No risk. Just clarity on every job.</p>
-        <div class="final-cta-buttons">
-          <a href="#" class="btn btn-primary" style="font-size: 18px; padding: 18px 44px;">Start Free Trial</a>
-          <div class="store-badges">
-            <a href="#"><img src="assets/ios-logo.png" alt="Download on App Store"></a>
-            <a href="#"><img src="assets/google-play-logo.png" alt="Get it on Google Play"></a>
-          </div>
-          <p class="hero-trust" style="margin-top: 12px;">Join hundreds of Australian tradies taking control of their business.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-logo">
-        <img src="assets/ozman-icon.png" alt="OZMAN">
-        <span>OZMAN</span>
-      </div>
-      <div class="footer-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="support.html">Support</a>
-        <a href="mailto:Info.zecongroup@gmail.com">Email Us</a>
-        <a href="https://www.instagram.com/ozmannofficial?igsh=dHkyaDE4cndhaXA%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.facebook.com/share/1J6ujHSk2w/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
-      </div>
-      <p style="margin-bottom: 8px;">Info.zecongroup@gmail.com</p>
-      <p>&copy; 2025 OZMAN. Built in Australia for Australian tradies.</p>
-    </div>
-  </footer>
-
-  <!-- STICKY CTA -->
-  <div class="sticky-cta" id="stickyCta">
-    <span class="cta-text">Ready to take control?</span>
-    <a href="#download" class="btn btn-primary btn-sm">Start Free Trial</a>
   </div>
+</section>
 
-  <script>
-    // Sticky CTA visibility
-    const stickyCta = document.getElementById('stickyCta');
-    const nav = document.getElementById('nav');
-    let lastScroll = 0;
+<!-- HOW IT WORKS -->
+<section class="sec sec-alt">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">How It Works</span>
+      <h2 class="title">Up and running in 30 seconds</h2>
+      <p class="sub mx">No complicated setup. No learning curve. If you can use Instagram, you can use OZMAN.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step fu">
+        <div class="step-n">1</div>
+        <h3>Create your job</h3>
+        <p>Tap, name it, set your quote. Done in seconds — on-site, in the ute, wherever.</p>
+      </div>
+      <div class="step fu">
+        <div class="step-n">2</div>
+        <h3>Log your costs</h3>
+        <p>Add labour, materials, and overheads as you go. OZMAN tracks everything in real-time.</p>
+      </div>
+      <div class="step fu">
+        <div class="step-n">3</div>
+        <h3>See your profit</h3>
+        <p>Instant breakdown of what you quoted vs what you spent. No surprises. No guessing.</p>
+      </div>
+    </div>
+    <div class="tc fu" style="margin-top:48px">
+      <a href="#download" class="btn btn-g">Start Your Free Trial</a>
+    </div>
+  </div>
+</section>
 
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      // Show sticky CTA after scrolling past hero
-      if (scrollY > 600) {
-        stickyCta.classList.add('visible');
-      } else {
-        stickyCta.classList.remove('visible');
-      }
-      // Nav shadow
-      if (scrollY > 10) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-      lastScroll = scrollY;
-    });
+<!-- FEATURES -->
+<section class="sec" id="features">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Everything You Need</span>
+      <h2 class="title">Built for the tools, not the office</h2>
+      <p class="sub mx">Every feature designed from real trade industry experience — not by a tech company guessing what you need.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-c fu"><img src="assets/features/fc01_projects_screen.png" alt="Projects" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc02_quote_summary.png" alt="Quotes" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc03_earnings_dashboard.png" alt="Earnings" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc04_building_estimator.png" alt="Estimator" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc07_invoice_generator.png" alt="Invoices" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc08_day_rate_job.png" alt="Day Rate" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc05_workers_pay_rates.png" alt="Workers" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc06_project_breakdown.png" alt="Breakdown" loading="lazy"></div>
+      <div class="feat-c fu"><img src="assets/features/fc09_home_dashboard.png" alt="Dashboard" loading="lazy"></div>
+    </div>
+  </div>
+</section>
 
-    // Intersection Observer for fade-up animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -40px 0px'
-    });
+<!-- OBJECTION BUSTER -->
+<section class="sec sec-alt">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Straight Talk</span>
+      <h2 class="title">We know what you're thinking</h2>
+      <p class="sub mx">Here's the honest answer to every doubt you've got.</p>
+    </div>
+    <div class="obj-grid">
+      <div class="obj-c fu">
+        <div class="obj-q">"I'm not good with technology — I won't know how to use it"</div>
+        <div class="obj-a">If you can scroll Instagram, you can use OZMAN. It's designed for blokes on the tools, not accountants behind a desk.</div>
+      </div>
+      <div class="obj-c fu">
+        <div class="obj-q">"It's probably too expensive"</div>
+        <div class="obj-a">Less than a coffee a day. And it pays for itself on the very first job when you stop underquoting.</div>
+      </div>
+      <div class="obj-c fu">
+        <div class="obj-q">"I've managed without it this long"</div>
+        <div class="obj-a">Have you though? Or have you been leaving money on the table without realising? Most tradies are shocked when they see the real numbers.</div>
+      </div>
+      <div class="obj-c fu">
+        <div class="obj-q">"It's probably built by some tech company overseas"</div>
+        <div class="obj-a">Built in Australia by someone who's worked in the trade industry. Not a Silicon Valley startup guessing what tradies need.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+<!-- SCREENSHOTS -->
+<section class="sec">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">See It In Action</span>
+      <h2 class="title">Built to work on your phone</h2>
+      <p class="sub mx">Clean, simple screens designed for one-handed use on the job site.</p>
+    </div>
+  </div>
+  <div class="ss-track fu">
+    <div class="ss-item"><img src="assets/screenshots-new/screen-02.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-03.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-04.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-05.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-06.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-07.png" alt="OZMAN" loading="lazy"></div>
+    <div class="ss-item"><img src="assets/screenshots-new/screen-08.png" alt="OZMAN" loading="lazy"></div>
+  </div>
+</section>
 
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  </script>
+<!-- TESTIMONIALS -->
+<section class="sec sec-alt">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Real Tradies. Real Results.</span>
+      <h2 class="title">What tradies are saying</h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-c fu">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"I used to finish jobs and just hope I made money. Now I know exactly where every dollar goes. Found out I was underquoting by 15% on most jobs."</blockquote>
+        <div class="test-author">— Builder, Sydney NSW</div>
+      </div>
+      <div class="test-c fu">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"The quoting tool alone is worth it. I used to spend an hour on quotes in Excel. Now I do it in 2 minutes on my phone and the client gets a professional PDF."</blockquote>
+        <div class="test-author">— Electrician, Melbourne VIC</div>
+      </div>
+      <div class="test-c fu">
+        <div class="test-stars">★★★★★</div>
+        <blockquote>"I was losing money on materials because I'd forget to charge them back. OZMAN tracks everything so nothing slips through. Game changer."</blockquote>
+        <div class="test-author">— Plumber, Brisbane QLD</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO GALLERY -->
+<section class="sec">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Built Different</span>
+      <h2 class="title">Designed for the tools, not the office</h2>
+      <p class="sub mx">Every feature built from real trade industry experience.</p>
+    </div>
+    <div class="promo-grid">
+      <div class="promo-i fu"><img src="assets/promo/03_financial.png" alt="Financial Tracking" loading="lazy"></div>
+      <div class="promo-i fu"><img src="assets/promo/04_quotes.png" alt="Quoting" loading="lazy"></div>
+      <div class="promo-i fu"><img src="assets/promo/05_building_cost.png" alt="Building Costs" loading="lazy"></div>
+      <div class="promo-i fu"><img src="assets/promo/06_earnings.png" alt="Earnings" loading="lazy"></div>
+      <div class="promo-i fu"><img src="assets/promo/07_award_rates.png" alt="Award Rates" loading="lazy"></div>
+      <div class="promo-i fu"><img src="assets/promo/08_safety.png" alt="Safety" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="sec sec-alt">
+  <div class="con">
+    <div class="tc fu">
+      <span class="label">Why Switch</span>
+      <h2 class="title">Why tradies are switching to OZMAN</h2>
+      <p class="sub mx">Most tools overcomplicate everything. OZMAN keeps it simple.</p>
+    </div>
+    <table class="fu" style="width:100%;max-width:680px;margin:40px auto 0;border-collapse:separate;border-spacing:0;border-radius:var(--r-s);overflow:hidden;border:1px solid var(--border);font-size:15px;background:var(--bg)">
+      <thead>
+        <tr>
+          <th style="padding:14px 18px;text-align:left;font-size:13px;text-transform:uppercase;letter-spacing:.5px;background:#f8f9fa;color:var(--text-3)"></th>
+          <th style="padding:14px 18px;text-align:left;font-size:13px;text-transform:uppercase;letter-spacing:.5px;background:var(--red-bg);color:var(--red)">Other Tools</th>
+          <th style="padding:14px 18px;text-align:left;font-size:13px;text-transform:uppercase;letter-spacing:.5px;background:var(--green-l);color:var(--green-d)">OZMAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">Setup</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">Complicated onboarding</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Ready in 30 seconds</td></tr>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">Usability</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">Built for office workers</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Built for tradies on-site</td></tr>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">Features</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">Bloated with stuff you don't need</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Only what matters</td></tr>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">GST</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">Manual calculations</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Inc/Ex GST automatic</td></tr>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">Price</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">$150–$300/month</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Built for value</td></tr>
+        <tr><td style="padding:12px 18px;border-top:1px solid var(--border);font-weight:600">Who built it</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--red)">Tech companies overseas</td><td style="padding:12px 18px;border-top:1px solid var(--border);color:var(--green-d);font-weight:600">Australian, trade industry</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="download">
+  <div class="con fu">
+    <span class="label">Get Started</span>
+    <h2 class="title">Take control of your business today</h2>
+    <p class="sub mx">7-day free trial. No credit card. No risk. Just clarity on every job.</p>
+    <a href="#download" class="btn btn-g btn-lg">Download Free<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <div class="final-stores">
+      <a href="#"><img src="assets/ios-logo.png" alt="App Store"></a>
+      <a href="#"><img src="assets/google-play-logo.png" alt="Google Play"></a>
+    </div>
+    <p class="final-note">Join hundreds of Australian tradies who stopped guessing and started profiting.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-l">
+      <img src="assets/ozman-icon.png" alt="OZMAN">
+      <span>OZMAN</span>
+    </div>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:Info.zecongroup@gmail.com">Email Us</a>
+      <a href="https://www.instagram.com/ozmannofficial?igsh=dHkyaDE4cndhaXA%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/share/1J6ujHSk2w/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <div class="footer-copy">&copy; 2025 Zecon Group Pty Ltd (ABN 17 689 490 115). All rights reserved. OZMAN is a registered trademark of Zecon Group Pty Ltd.</div>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky" id="stickyCta">
+  <span class="sticky-txt">Ready to take control?</span>
+  <a href="#download" class="btn btn-g btn-sm">Start Free Trial</a>
+</div>
+
+<script>
+  const nav=document.getElementById('nav'),sticky=document.getElementById('stickyCta');
+  window.addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',scrollY>10);
+    sticky.classList.toggle('show',scrollY>600);
+  });
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+</script>
 
 </body>
 </html>

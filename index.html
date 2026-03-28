@@ -12,6 +12,21 @@
   <meta property="og:url" content="https://ozmanofficial.com">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="assets/ozman-icon.png">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '4355642344696511');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4355642344696511&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -562,6 +577,18 @@
   const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.fu').forEach(el=>obs.observe(el));
   document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
+
+  /* Meta Pixel — track download button clicks */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (href.indexOf('apps.apple.com') !== -1) {
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name: 'app_store_click', content_category: 'ios_download'});
+    } else if (href.indexOf('play.google.com') !== -1) {
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name: 'google_play_click', content_category: 'android_download'});
+    }
+  });
 </script>
 
 </body>

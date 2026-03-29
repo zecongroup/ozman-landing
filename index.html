@@ -236,7 +236,7 @@
       <a href="https://www.facebook.com/share/1J6ujHSk2w/?mibextid=wwXIfr" target="_blank" rel="noopener" class="nav-social" aria-label="Facebook">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       </a>
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" class="btn btn-g btn-sm">Start Free Trial</a>
+      <a href="javascript:void(0)" onclick="redirectToStore()" class="btn btn-g btn-sm">Start Free Trial</a>
     </div>
   </div>
 </nav>
@@ -252,7 +252,7 @@
       <h1 class="hero-t">Stop guessing.<br><span class="hl">Start profiting.</span></h1>
       <p class="hero-sub">Track job costs, build quotes in seconds, and know your real profit on every job — all from your phone. No spreadsheets. No stress.</p>
       <div class="hero-ctas">
-        <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" class="btn btn-g btn-lg">Start Free Trial Now<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="javascript:void(0)" onclick="redirectToStore()" class="btn btn-g btn-lg" id="mainCTA">Start Free Trial Now<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
         <div class="hero-stores">
           <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487"><img src="assets/ios-logo.png" alt="Download on App Store"></a>
           <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110"><img src="assets/google-play-logo.png" alt="Get it on Google Play"></a>
@@ -578,10 +578,27 @@
 <!-- STICKY MOBILE CTA -->
 <div class="sticky" id="stickyCta">
   <span class="sticky-txt">Ready to take control?</span>
-  <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" class="btn btn-g btn-sm">Start Free Trial</a>
+  <a href="javascript:void(0)" onclick="redirectToStore()" class="btn btn-g btn-sm">Start Free Trial</a>
 </div>
 
 <script>
+  /* Device detection and smart redirect */
+  function redirectToStore() {
+    var ua = navigator.userAgent.toLowerCase();
+    var isAndroid = ua.indexOf('android') > -1;
+    var isIOS = /iphone|ipad|ipod/.test(ua);
+    
+    if (isAndroid) {
+      window.location.href = 'https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110';
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name: 'google_play_click', content_category: 'android_download'});
+    } else if (isIOS) {
+      window.location.href = 'https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487';
+      if (typeof fbq === 'function') fbq('track', 'Lead', {content_name: 'app_store_click', content_category: 'ios_download'});
+    } else {
+      window.location.href = 'https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487';
+    }
+  }
+
   const nav=document.getElementById('nav'),sticky=document.getElementById('stickyCta');
   window.addEventListener('scroll',()=>{
     nav.classList.toggle('scrolled',scrollY>10);

@@ -79,6 +79,11 @@
     .sub{font-size:clamp(16px,2.2vw,20px);color:var(--text-2);line-height:1.65;max-width:580px}
     .tc{text-align:center}.mx{margin-left:auto;margin-right:auto}
 
+    /* === HERO COMPACT TOP === */
+    .hero-compact{padding:48px 24px;background:#fff;border-bottom:1px solid var(--border)}
+    .hero-compact .con{max-width:900px;margin:0 auto}
+    @media(max-width:768px){.hero-compact{padding:32px 16px}}
+
     /* === HERO === */
     .hero{padding:100px 24px 60px;background:linear-gradient(180deg,#fff 0%,var(--bg-green) 100%);overflow:hidden}
     @media(max-width:768px){.hero{padding:80px 24px 40px}}
@@ -263,6 +268,29 @@
   </div>
 </div>
 
+<!-- HERO - COMPACT TOP SECTION -->
+<section class="hero-compact">
+  <div class="con">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="margin-bottom:24px;padding:20px;background:#F0F9FF;border-left:6px solid #0284C7;border-radius:8px;font-size:18px;color:#0C4A6E">
+        <div style="font-weight:700;margin-bottom:6px;font-size:20px">Other apps: A$99–760/month</div>
+        <div style="font-weight:700;color:#0284C7;font-size:28px;margin:8px 0">OZMAN: A$12.99/month</div>
+        <div style="margin-top:8px;font-size:16px;color:#0369A1;font-weight:600">Same features. 90% less cost.</div>
+      </div>
+      <a href="javascript:void(0)" onclick="redirectToStore()" class="btn btn-g btn-xl" id="mainCTA" style="display:inline-flex;margin-bottom:24px;font-size:24px;padding:24px 60px">Start Free Trial Now<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <div style="display:flex;justify-content:center;gap:16px;margin-bottom:24px">
+        <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487"><img src="assets/ios-logo.png" alt="Download on App Store" style="height:56px"></a>
+        <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110"><img src="assets/google-play-logo.png" alt="Get it on Google Play" style="height:56px"></a>
+      </div>
+      <div style="padding:16px 0;border-top:2px solid #E2E8F0;border-bottom:2px solid #E2E8F0;font-size:16px;color:#475569;line-height:2.2">
+        <div style="font-weight:700;color:#0F172A;font-size:18px;margin-bottom:8px">✓ 500+ tradies already using OZMAN</div>
+        <div style="font-size:16px;font-weight:600">✓ 7-day free trial — then A$12.99/month</div>
+        <div style="font-size:16px;font-weight:600">✓ Cancel anytime, no questions asked</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HERO -->
 <section class="hero">
   <div class="con">
@@ -273,24 +301,6 @@
       </div>
       <h1 class="hero-t">Stop guessing.<br><span class="hl">Start profiting.</span></h1>
       <p class="hero-sub">Track job costs, build quotes in seconds, and know your real profit on every job — all from your phone. No spreadsheets. No stress.</p>
-      <div style="margin-bottom:20px;padding:12px;background:#F0F9FF;border-left:4px solid #0284C7;border-radius:6px;font-size:13px;color:#0C4A6E">
-        <div style="font-weight:600;margin-bottom:4px">Other apps: A$99–760/month</div>
-        <div style="font-weight:600;color:#0284C7">OZMAN: A$12.99/month</div>
-        <div style="margin-top:4px;font-size:12px;color:#0369A1">Same features. 90% less cost.</div>
-      </div>
-      <div class="hero-ctas">
-        <a href="javascript:void(0)" onclick="redirectToStore()" class="btn btn-g btn-xl" id="mainCTA">Start Free Trial Now<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        <div class="hero-stores">
-          <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487"><img src="assets/ios-logo.png" alt="Download on App Store"></a>
-          <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110"><img src="assets/google-play-logo.png" alt="Get it on Google Play"></a>
-        </div>
-        <div style="margin-top:12px;padding:12px 0;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;font-size:13px;color:#475569;line-height:1.8">
-          <div style="font-weight:600;color:#0F172A;margin-bottom:6px">✓ 500+ tradies already using OZMAN</div>
-          <div>✓ 7-day free trial — then A$12.99/month</div>
-          <div>✓ Cancel anytime, no questions asked</div>
-        </div>
-        <p class="hero-trust">7-day free trial · Secure payment required · <b>iPhone &amp; Android</b></p>
-      </div>
     </div>
 
   </div>

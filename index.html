@@ -53,11 +53,11 @@
     .hero{padding:100px 24px 80px;background:linear-gradient(135deg,var(--dark-bg) 0%,var(--dark-bg-alt) 100%);position:relative;overflow:hidden}
     @media(max-width:768px){.hero{padding:60px 24px 40px}}
     .hero::before{content:'';position:absolute;top:0;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,.08) 0%,transparent 70%);border-radius:50%;z-index:0}
-    .hero .con{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+    .hero .con{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:60px;align-items:center;position:relative;z-index:1}
     @media(max-width:1024px){.hero .con{grid-template-columns:1fr;gap:40px}}
     @media(max-width:768px){.hero .con{grid-template-columns:1fr;gap:32px}}
     
-    .hero-left{max-width:560px}
+    .hero-left{max-width:700px}
     .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15);color:var(--green);font-size:13px;font-weight:700;padding:8px 16px;border-radius:100px;margin-bottom:24px;border:1px solid rgba(34,197,94,.3)}
     .hero-eyebrow svg{width:16px;height:16px}
     .hero-headline{font-size:clamp(42px,7vw,64px);font-weight:900;line-height:1.1;letter-spacing:-2px;color:var(--text-white);margin-bottom:20px}
@@ -76,11 +76,8 @@
     .hero-trust{display:flex;gap:20px;font-size:13px;color:var(--text-light);margin-top:16px;flex-wrap:wrap}
     .hero-trust b{color:var(--text-white);font-weight:600}
     
-    .hero-right{display:flex;justify-content:center;align-items:center}
-    @media(max-width:1024px){.hero-right{order:-1}}
-    .hero-phone{width:100%;max-width:420px;border-radius:24px;filter:drop-shadow(0 40px 80px rgba(0,0,0,.4));animation:float 3s ease-in-out infinite}
-    @keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(-20px)}}
-    @media(max-width:768px){.hero-phone{max-width:300px}}
+    .hero-right{display:none}
+    .hero-phone{display:none}
 
     /* === TRUST STATS === */
     .trust{padding:60px 24px;background:var(--dark-bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}

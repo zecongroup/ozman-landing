@@ -356,6 +356,35 @@
 </div>
 
 <script>
+// Device detection and smart app store linking
+function getAppStoreLink() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isAndroid = /android/.test(userAgent);
+  const isIOS = /iphone|ipad|ipod/.test(userAgent);
+  
+  if (isAndroid) {
+    return 'https://play.google.com/store/apps/details?id=space.manus.ozman';
+  } else if (isIOS) {
+    return 'https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487';
+  } else {
+    // Default to iOS for desktop/unknown
+    return 'https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487';
+  }
+}
+
+// Update all CTA buttons with smart linking
+function setupCTAButtons() {
+  const appStoreLink = getAppStoreLink();
+  document.querySelectorAll('a.btn-primary').forEach(button => {
+    if (button.href.includes('apps.apple.com') || button.href.includes('play.google.com')) {
+      button.href = appStoreLink;
+    }
+  });
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', setupCTAButtons);
+
 // Intersection Observer for animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {

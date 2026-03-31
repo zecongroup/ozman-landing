@@ -985,17 +985,12 @@
       }
     });
 
-    // Countdown timer — 32 hours from first visit, persisted in localStorage
-    var DURATION_MS = (32 * 60 + 38) * 60 * 1000; // 32 hours 38 minutes
-    var storageKey = 'ozman_offer_deadline';
-    var stored = localStorage.getItem(storageKey);
-    var deadline;
-    if (stored) {
-      deadline = parseInt(stored, 10);
-    } else {
-      deadline = Date.now() + DURATION_MS;
-      localStorage.setItem(storageKey, deadline);
-    }
+    // Countdown timer — randomised per session, resets on every page visit
+    // Range: 28h 12m to 35h 59m (feels organic, different for every visitor)
+    var minMs = (28 * 60 + 12) * 60 * 1000;
+    var maxMs = (35 * 60 + 59) * 60 * 1000;
+    var randomDuration = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+    var deadline = Date.now() + randomDuration;
     function updateTimer() {
       var diff = deadline - Date.now();
       if (diff <= 0) diff = 0;

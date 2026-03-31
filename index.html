@@ -35,192 +35,276 @@
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
     :root{
-      --bg-dark:#0f172a;--bg-dark-alt:#1e293b;
-      --bg-light:#ffffff;--bg-light-alt:#f8fafc;
-      --text-dark:#0f172a;--text-light:#64748b;--text-white:#ffffff;--text-white-muted:#94a3b8;
-      --green:#22C55E;--green-dark:#16A34A;--green-glow:rgba(34,197,94,.3);
-      --orange:#F97316;--orange-dark:#EA580C;
-      --red:#EF4444;--border:#e2e8f0;--border-dark:#334155;
+      --primary:#1E40AF;
+      --primary-light:#3B82F6;
+      --primary-dark:#1E3A8A;
+      --accent:#F59E0B;
+      --accent-dark:#D97706;
+      --bg:#ffffff;
+      --bg-alt:#F8FAFF;
+      --bg-dark:#0F172A;
+      --bg-dark-alt:#1E293B;
+      --text:#0F172A;
+      --text-muted:#64748B;
+      --text-light:#94A3B8;
+      --text-white:#ffffff;
+      --text-white-muted:rgba(255,255,255,.75);
+      --border:#E2E8F0;
+      --border-strong:#CBD5E1;
+      --success:#22C55E;
+      --error:#EF4444;
       --r:16px;--r-s:12px;--r-l:24px;
-      --shadow:0 4px 24px rgba(0,0,0,.06);--shadow-l:0 12px 40px rgba(0,0,0,.1)
+      --shadow:0 4px 24px rgba(0,0,0,.06);
+      --shadow-m:0 8px 32px rgba(0,0,0,.1);
+      --shadow-l:0 20px 60px rgba(0,0,0,.12);
     }
     html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-dark);background:var(--bg-light);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
     img{max-width:100%;display:block}
     .con{max-width:1100px;margin:0 auto;padding:0 24px}
-    
-    /* === NAV === */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(15,23,42,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-dark);padding:0 24px}
+
+    /* ===== NAV ===== */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-logo img{width:36px;height:36px;border-radius:8px}
-    .nav-logo span{color:var(--text-white);font-weight:800;font-size:20px;letter-spacing:-0.5px}
+    .nav-logo span{color:var(--text);font-weight:800;font-size:20px;letter-spacing:-0.5px}
     .nav-links{display:flex;gap:28px;align-items:center}
-    .nav-links a{color:var(--text-white-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
-    .nav-links a:hover{color:var(--text-white)}
-    .nav-cta{background:var(--green);color:#000;font-weight:700;font-size:13px;padding:10px 20px;border-radius:100px;text-decoration:none;transition:all .2s;white-space:nowrap}
-    .nav-cta:hover{background:var(--green-dark);transform:translateY(-1px)}
+    .nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--primary)}
+    .nav-cta{background:var(--primary);color:#fff;font-weight:700;font-size:13px;padding:10px 20px;border-radius:100px;text-decoration:none;transition:all .2s;white-space:nowrap;cursor:pointer;border:none;font-family:inherit}
+    .nav-cta:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(30,64,175,.3)}
     @media(max-width:768px){.nav-links{display:none}.nav-cta{font-size:12px;padding:8px 16px}}
 
-    /* === BUTTONS === */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-weight:800;border:none;cursor:pointer;text-decoration:none;transition:all .2s;border-radius:100px;font-size:17px;line-height:1;padding:18px 44px;text-transform:uppercase;letter-spacing:0.5px}
-    .btn-primary{background:var(--green);color:#000;box-shadow:0 8px 32px var(--green-glow)}
-    .btn-primary:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 12px 40px var(--green-glow)}
+    /* ===== MODAL ===== */
+    .modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+    .modal-overlay.active{display:flex}
+    .modal-box{background:#fff;border-radius:24px;padding:40px 32px;max-width:420px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.2);position:relative;animation:modalIn .25s ease}
+    @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
+    .modal-close{position:absolute;top:16px;right:16px;background:var(--bg-alt);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:18px;transition:all .2s}
+    .modal-close:hover{background:var(--border);color:var(--text)}
+    .modal-icon{width:64px;height:64px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+    .modal-icon svg{width:32px;height:32px;color:#fff}
+    .modal-title{font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-0.5px}
+    .modal-sub{font-size:14px;color:var(--text-muted);margin-bottom:28px;line-height:1.6}
+    .modal-buttons{display:flex;flex-direction:column;gap:12px}
+    .modal-btn{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:14px;text-decoration:none;transition:all .2s;border:2px solid transparent;cursor:pointer}
+    .modal-btn-ios{background:var(--text);color:#fff;border-color:var(--text)}
+    .modal-btn-ios:hover{background:#1a1a2e;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+    .modal-btn-android{background:#fff;color:var(--text);border-color:var(--border-strong)}
+    .modal-btn-android:hover{border-color:var(--primary);transform:translateY(-1px);box-shadow:0 8px 24px rgba(30,64,175,.12)}
+    .modal-btn-icon{width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .modal-btn-icon svg{width:28px;height:28px}
+    .modal-btn-text{text-align:left}
+    .modal-btn-text small{display:block;font-size:11px;font-weight:500;opacity:.7;margin-bottom:2px}
+    .modal-btn-text strong{display:block;font-size:15px;font-weight:700}
+    .modal-divider{display:flex;align-items:center;gap:12px;color:var(--text-light);font-size:12px;font-weight:500}
+    .modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .modal-microcopy{font-size:12px;color:var(--text-light);margin-top:16px}
+
+    /* ===== BUTTONS ===== */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-weight:800;border:none;cursor:pointer;text-decoration:none;transition:all .2s;border-radius:100px;font-size:16px;line-height:1;padding:18px 40px;text-transform:uppercase;letter-spacing:0.5px}
+    .btn-primary{background:var(--primary);color:#fff;box-shadow:0 8px 32px rgba(30,64,175,.25)}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 12px 40px rgba(30,64,175,.35)}
     .btn-primary:active{transform:translateY(0)}
-    .btn-outline{background:transparent;color:var(--text-white);border:2px solid rgba(255,255,255,.3);padding:16px 36px}
-    .btn-outline:hover{border-color:var(--green);color:var(--green)}
-    @media(max-width:768px){.btn{width:100%;padding:16px 32px;font-size:15px}}
+    .btn-white{background:#fff;color:var(--primary);box-shadow:0 8px 32px rgba(0,0,0,.12)}
+    .btn-white:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.18)}
+    @media(max-width:768px){.btn{width:100%;padding:16px 28px;font-size:14px}}
 
-    .store-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .store-buttons a{display:flex;align-items:center;gap:8px;background:var(--green);color:#000;font-weight:700;font-size:15px;padding:14px 28px;border-radius:100px;text-decoration:none;transition:all .2s;box-shadow:0 8px 32px var(--green-glow)}
-    .store-buttons a:hover{background:var(--green-dark);transform:translateY(-2px)}
-    .store-buttons a svg{width:22px;height:22px}
-    @media(max-width:768px){.store-buttons{flex-direction:column}.store-buttons a{justify-content:center;padding:14px 24px;font-size:14px}}
-
-    .microcopy{font-size:13px;color:var(--text-light);margin-top:12px;text-align:center}
-    .microcopy-white{color:var(--text-white-muted)}
+    .microcopy{font-size:13px;color:var(--text-muted);margin-top:12px;text-align:center}
+    .microcopy-white{color:rgba(255,255,255,.65)}
     .stars{color:#FBBF24;font-size:18px;letter-spacing:2px}
-    .trust-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--text-light)}
-    .trust-row-white{color:var(--text-white-muted)}
+    .trust-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px;font-size:13px;color:var(--text-muted)}
     .trust-row span{display:flex;align-items:center;gap:6px}
 
-    /* === SECTION HELPERS === */
+    /* ===== SECTIONS ===== */
     .section{padding:80px 24px}
+    .section-white{background:#fff}
+    .section-alt{background:var(--bg-alt)}
     .section-dark{background:var(--bg-dark);color:var(--text-white)}
-    .section-light{background:var(--bg-light)}
-    .section-alt{background:var(--bg-light-alt)}
+    .section-blue{background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 100%);color:var(--text-white)}
     @media(max-width:768px){.section{padding:56px 16px}}
-    .section-eyebrow{display:inline-block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:16px}
-    .section-headline{font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
-    .section-sub{font-size:17px;line-height:1.7;max-width:680px;margin:0 auto 40px}
-    .section-sub-dark{color:var(--text-white-muted)}
+    .section-eyebrow{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--primary);margin-bottom:14px;background:rgba(30,64,175,.08);padding:6px 14px;border-radius:100px}
+    .section-eyebrow-white{color:#fff;background:rgba(255,255,255,.15)}
+    .section-headline{font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:16px}
+    .section-sub{font-size:17px;line-height:1.7;max-width:680px;margin:0 auto 40px;color:var(--text-muted)}
+    .section-sub-white{color:rgba(255,255,255,.75)}
     .text-center{text-align:center}
 
-    /* === HERO === */
-    .hero{padding:120px 24px 80px;background:var(--bg-dark);position:relative;overflow:hidden}
-    .hero::before{content:'';position:absolute;top:-100px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(34,197,94,.15) 0%,transparent 70%);border-radius:50%}
-    .hero::after{content:'';position:absolute;bottom:-100px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(34,197,94,.08) 0%,transparent 70%);border-radius:50%}
+    /* ===== HERO ===== */
+    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+    .hero::after{content:'';position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,158,11,.07) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero .con{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
     @media(max-width:900px){.hero .con{grid-template-columns:1fr;text-align:center}}
-    .hero-left{}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15);color:var(--green);font-size:13px;font-weight:700;padding:8px 18px;border-radius:100px;margin-bottom:24px;border:1px solid rgba(34,197,94,.3)}
-    .hero-headline{font-size:clamp(36px,6vw,56px);font-weight:900;line-height:1.08;letter-spacing:-2px;color:var(--text-white);margin-bottom:20px}
-    .hero-headline .hl{color:var(--green)}
-    .hero-sub{font-size:17px;color:var(--text-white-muted);line-height:1.7;margin-bottom:32px;max-width:540px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(30,64,175,.08);color:var(--primary);font-size:13px;font-weight:700;padding:8px 18px;border-radius:100px;margin-bottom:24px;border:1px solid rgba(30,64,175,.15)}
+    .hero-eyebrow svg{width:16px;height:16px;color:var(--accent)}
+    .hero-headline{font-size:clamp(36px,5.5vw,54px);font-weight:900;line-height:1.08;letter-spacing:-2px;color:var(--text);margin-bottom:20px}
+    .hero-headline .hl{color:var(--primary)}
+    .hero-sub{font-size:17px;color:var(--text-muted);line-height:1.7;margin-bottom:32px;max-width:540px}
     @media(max-width:900px){.hero-sub{margin:0 auto 32px}}
     .hero-bullets{list-style:none;margin-bottom:32px}
-    .hero-bullets li{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--text-white-muted);padding:6px 0}
-    .hero-bullets li svg{width:20px;height:20px;color:var(--green);flex-shrink:0}
+    .hero-bullets li{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--text-muted);padding:5px 0;font-weight:500}
+    .hero-bullets li svg{width:20px;height:20px;color:var(--success);flex-shrink:0}
     @media(max-width:900px){.hero-bullets{display:inline-block;text-align:left}}
     .hero-right{display:flex;justify-content:center}
-    .hero-phone{width:340px;border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.5);object-fit:cover;max-height:480px}
-    @media(max-width:900px){.hero-right{margin-top:28px}.hero-phone{width:100%;max-width:320px;max-height:400px}}
+    .hero-img{width:100%;max-width:480px;border-radius:20px;box-shadow:0 32px 80px rgba(0,0,0,.15);object-fit:cover}
+    @media(max-width:900px){.hero-right{margin-top:32px}.hero-img{max-width:360px}}
 
-    /* === PROBLEM === */
-    .problem-body{font-size:17px;line-height:1.8;max-width:680px;margin:0 auto 32px;color:var(--text-light)}
-    .problem-body strong{color:var(--text-dark)}
+    /* ===== TRUST BAR ===== */
+    .trust-bar{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 24px}
+    .trust-bar-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text-light);text-align:center;margin-bottom:20px}
+    .trust-logos{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+    .trust-logo-item{display:flex;align-items:center;justify-content:center;opacity:.55;transition:opacity .2s;filter:grayscale(100%)}
+    .trust-logo-item:hover{opacity:.8}
+    .trust-logo-item img{height:40px;width:auto;object-fit:contain}
+    @media(max-width:600px){.trust-logos{gap:24px}.trust-logo-item img{height:30px}}
+
+    /* ===== PROBLEM ===== */
+    .problem-body{font-size:17px;line-height:1.8;max-width:680px;margin:0 auto 32px;color:var(--text-muted)}
+    .problem-body strong{color:var(--text)}
     .pain-list{list-style:none;max-width:600px;margin:0 auto 32px}
-    .pain-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;font-size:15px;color:var(--text-dark)}
-    .pain-list li svg{width:20px;height:20px;color:var(--red);flex-shrink:0;margin-top:2px}
-    .transition-text{font-size:18px;font-weight:700;color:var(--green);margin-top:24px}
+    .pain-list li{display:flex;align-items:flex-start;gap:12px;padding:12px 0;font-size:15px;color:var(--text);border-bottom:1px solid var(--border)}
+    .pain-list li:last-child{border-bottom:none}
+    .pain-list li svg{width:20px;height:20px;color:var(--error);flex-shrink:0;margin-top:2px}
+    .transition-text{font-size:18px;font-weight:700;color:var(--primary);margin-top:24px}
 
-    /* === SOLUTION === */
-    .solution-body{font-size:17px;line-height:1.8;max-width:680px;margin:0 auto 24px;color:var(--text-white-muted)}
+    /* ===== SOLUTION ===== */
+    .solution-body{font-size:17px;line-height:1.8;max-width:680px;margin:0 auto 24px;color:rgba(255,255,255,.8)}
     .solution-points{list-style:none;display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-    .solution-points li{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:var(--text-white)}
-    .solution-points li svg{width:20px;height:20px;color:var(--green)}
+    .solution-points li{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#fff;background:rgba(255,255,255,.12);padding:8px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.2)}
+    .solution-points li svg{width:18px;height:18px;color:#86EFAC}
 
-    /* === HOW IT WORKS === */
-    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:40px}
-    @media(max-width:768px){.steps-grid{grid-template-columns:1fr;gap:24px}}
-    .step-card{background:var(--bg-light);border:1px solid var(--border);border-radius:var(--r);padding:32px 24px;text-align:center;position:relative}
-    .step-num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:var(--green);color:#000;font-weight:800;font-size:16px;border-radius:50%;margin-bottom:16px}
-    .step-card h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--text-dark)}
-    .step-card p{font-size:14px;color:var(--text-light);line-height:1.6}
-    .step-arrow{display:none}
-    @media(min-width:769px){.step-arrow{display:flex;align-items:center;position:absolute;right:-20px;top:50%;transform:translateY(-50%);color:var(--green);font-size:24px;z-index:2}}
+    /* ===== HOW IT WORKS ===== */
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:40px;position:relative}
+    @media(max-width:768px){.steps-grid{grid-template-columns:1fr;gap:20px}}
+    .step-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:32px 24px;text-align:center;box-shadow:var(--shadow);position:relative}
+    .step-num{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:var(--primary);color:#fff;font-weight:800;font-size:18px;border-radius:50%;margin-bottom:16px;box-shadow:0 4px 16px rgba(30,64,175,.3)}
+    .step-card h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--text)}
+    .step-card p{font-size:14px;color:var(--text-muted);line-height:1.6}
+    .steps-connector{display:none}
+    @media(min-width:769px){.steps-connector{display:block;position:absolute;top:40px;left:calc(33.33% - 8px);width:calc(33.33% + 16px);height:2px;background:linear-gradient(90deg,var(--primary),var(--primary-light));z-index:0}}
+    @media(min-width:769px){.steps-connector-2{left:calc(66.66% - 8px)}}
 
-    /* === BENEFITS === */
+    /* ===== BENEFITS ===== */
     .benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
     @media(max-width:900px){.benefits-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:600px){.benefits-grid{grid-template-columns:1fr}}
-    .benefit-card{background:rgba(255,255,255,.06);border:1px solid var(--border-dark);border-radius:var(--r);padding:28px 24px}
-    .benefit-icon{width:48px;height:48px;background:rgba(34,197,94,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-    .benefit-icon svg{width:24px;height:24px;color:var(--green)}
-    .benefit-card h3{font-size:16px;font-weight:700;color:var(--text-white);margin-bottom:8px}
-    .benefit-card p{font-size:14px;color:var(--text-white-muted);line-height:1.6}
+    .benefit-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;transition:all .2s;box-shadow:var(--shadow)}
+    .benefit-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-m);border-color:var(--primary-light)}
+    .benefit-icon{width:52px;height:52px;background:linear-gradient(135deg,rgba(30,64,175,.1),rgba(59,130,246,.1));border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .benefit-icon svg{width:26px;height:26px;color:var(--primary)}
+    .benefit-card h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px}
+    .benefit-card p{font-size:14px;color:var(--text-muted);line-height:1.6}
 
-    /* === SOCIAL PROOF === */
+    /* ===== TESTIMONIALS ===== */
     .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
     @media(max-width:768px){.testimonials-grid{grid-template-columns:1fr}}
-    .testimonial-card{background:var(--bg-light);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px}
+    .testimonial-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow);position:relative}
+    .testimonial-card::before{content:'\201C';position:absolute;top:16px;right:20px;font-size:60px;color:var(--primary);opacity:.1;font-family:Georgia,serif;line-height:1}
     .testimonial-stars{color:#FBBF24;font-size:16px;margin-bottom:12px}
-    .testimonial-card blockquote{font-size:15px;line-height:1.7;color:var(--text-dark);margin-bottom:16px;font-style:italic}
-    .testimonial-author{font-size:13px;font-weight:700;color:var(--text-dark)}
-    .testimonial-role{font-size:12px;color:var(--text-light)}
+    .testimonial-card blockquote{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:16px}
+    .testimonial-author{font-size:13px;font-weight:700;color:var(--text)}
+    .testimonial-role{font-size:12px;color:var(--text-muted)}
 
-    /* === COMPARISON === */
-    .comparison-table{width:100%;max-width:800px;margin:0 auto 40px;border-collapse:collapse;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+    /* ===== COMPARISON ===== */
+    .comparison-wrap{overflow-x:auto;margin-bottom:40px}
+    .comparison-table{width:100%;max-width:800px;margin:0 auto;border-collapse:collapse;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-m)}
     .comparison-table thead{background:var(--bg-dark)}
-    .comparison-table th{padding:16px 20px;font-size:14px;font-weight:700;color:var(--text-white);text-align:center}
+    .comparison-table th{padding:16px 20px;font-size:14px;font-weight:700;color:#fff;text-align:center}
     .comparison-table th:first-child{text-align:left;width:40%}
-    .comparison-table td{padding:14px 20px;font-size:14px;text-align:center;border-bottom:1px solid var(--border)}
-    .comparison-table td:first-child{text-align:left;font-weight:600;color:var(--text-dark)}
+    .comparison-table th.ozman-th{background:var(--primary);color:#fff}
+    .comparison-table td{padding:14px 20px;font-size:14px;text-align:center;border-bottom:1px solid var(--border);background:#fff}
+    .comparison-table td:first-child{text-align:left;font-weight:600;color:var(--text);background:#fff}
     .comparison-table tbody tr:last-child td{border-bottom:none}
-    .comparison-table .check{color:var(--green);font-size:20px;font-weight:700}
-    .comparison-table .cross{color:var(--red);font-size:20px;font-weight:700}
-    .comparison-table .ozman-col{background:rgba(34,197,94,.08)}
+    .comparison-table .check{color:var(--success);font-size:20px;font-weight:700}
+    .comparison-table .cross{color:var(--error);font-size:20px;font-weight:700}
+    .comparison-table .ozman-col{background:rgba(30,64,175,.04)!important}
     @media(max-width:600px){.comparison-table th,.comparison-table td{padding:10px 8px;font-size:12px}}
 
-    /* === OBJECTIONS / FAQ === */
+    /* ===== FAQ ===== */
     .faq-list{max-width:700px;margin:0 auto 40px}
-    .faq-item{border:1px solid var(--border-dark);border-radius:var(--r-s);margin-bottom:12px;overflow:hidden}
-    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-white);background:rgba(255,255,255,.04);transition:background .2s}
-    .faq-q:hover{background:rgba(255,255,255,.08)}
-    .faq-q svg{width:20px;height:20px;transition:transform .3s;flex-shrink:0;color:var(--green)}
+    .faq-item{border:1px solid var(--border);border-radius:var(--r-s);margin-bottom:10px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+    .faq-q{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer;font-size:15px;font-weight:600;color:var(--text);transition:background .2s}
+    .faq-q:hover{background:var(--bg-alt)}
+    .faq-q svg{width:20px;height:20px;transition:transform .3s;flex-shrink:0;color:var(--primary)}
     .faq-item.open .faq-q svg{transform:rotate(180deg)}
-    .faq-a{padding:0 24px;max-height:0;overflow:hidden;transition:all .3s ease;font-size:14px;line-height:1.7;color:var(--text-white-muted)}
+    .faq-a{padding:0 24px;max-height:0;overflow:hidden;transition:all .3s ease;font-size:14px;line-height:1.7;color:var(--text-muted)}
     .faq-item.open .faq-a{padding:0 24px 20px;max-height:300px}
 
-    /* === WHO IS FOR === */
+    /* ===== WHO IS FOR ===== */
     .who-list{list-style:none;max-width:600px;margin:0 auto 40px}
-    .who-list li{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);font-size:15px;color:var(--text-dark)}
+    .who-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);font-size:15px;color:var(--text)}
     .who-list li:last-child{border-bottom:none}
-    .who-list li svg{width:24px;height:24px;color:var(--green);flex-shrink:0;margin-top:1px}
+    .who-list li svg{width:24px;height:24px;color:var(--primary);flex-shrink:0;margin-top:1px}
 
-    /* === 10 REASONS === */
-    .reasons-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:900px;margin:0 auto 40px}
+    /* ===== REASONS ===== */
+    .reasons-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:900px;margin:0 auto 40px}
     @media(max-width:768px){.reasons-grid{grid-template-columns:1fr}}
-    .reason-card{display:flex;gap:14px;padding:20px;background:rgba(255,255,255,.04);border:1px solid var(--border-dark);border-radius:var(--r-s)}
-    .reason-num{width:32px;height:32px;background:var(--green);color:#000;font-weight:800;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .reason-card p{font-size:14px;color:var(--text-white-muted);line-height:1.6}
+    .reason-card{display:flex;gap:14px;padding:20px;background:#fff;border:1px solid var(--border);border-radius:var(--r-s);box-shadow:var(--shadow)}
+    .reason-num{width:36px;height:36px;background:var(--primary);color:#fff;font-weight:800;font-size:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .reason-card h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+    .reason-card p{font-size:13px;color:var(--text-muted);line-height:1.5}
 
-    /* === FINAL CTA === */
-    .final-cta{padding:80px 24px;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2744 100%);text-align:center}
-    .final-headline{font-size:clamp(28px,5vw,44px);font-weight:900;color:var(--text-white);line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
-    .final-headline .hl{color:var(--green)}
-    .final-body{font-size:17px;color:var(--text-white-muted);line-height:1.7;max-width:600px;margin:0 auto 36px}
+    /* ===== FINAL CTA ===== */
+    .final-cta{padding:80px 24px;background:linear-gradient(135deg,var(--primary-dark) 0%,var(--primary) 60%,#2563EB 100%);text-align:center;position:relative;overflow:hidden}
+    .final-cta::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);border-radius:50%}
+    .final-headline{font-size:clamp(28px,5vw,44px);font-weight:900;color:#fff;line-height:1.12;letter-spacing:-1px;margin-bottom:16px}
+    .final-body{font-size:17px;color:rgba(255,255,255,.8);line-height:1.7;max-width:600px;margin:0 auto 36px}
 
-    /* === FOOTER === */
-    .footer{background:var(--bg-dark);border-top:1px solid var(--border-dark);padding:40px 24px;color:var(--text-white-muted);font-size:13px}
+    /* ===== FOOTER ===== */
+    .footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;color:rgba(255,255,255,.5);font-size:13px}
     .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
     .footer-links{display:flex;gap:24px;flex-wrap:wrap}
-    .footer-links a{color:var(--text-white-muted);text-decoration:none;transition:color .2s}
-    .footer-links a:hover{color:var(--text-white)}
+    .footer-links a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+    .footer-links a:hover{color:#fff}
     .footer-social{display:flex;gap:16px}
-    .footer-social a{color:var(--text-white-muted);transition:color .2s}
-    .footer-social a:hover{color:var(--text-white)}
+    .footer-social a{color:rgba(255,255,255,.5);transition:color .2s;display:flex;align-items:center}
+    .footer-social a:hover{color:#fff}
     .footer-social a svg{width:20px;height:20px}
     @media(max-width:768px){.footer-inner{flex-direction:column;text-align:center;gap:16px}.footer-links{justify-content:center}}
 
-    /* === STICKY MOBILE CTA === */
-    .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);padding:12px 16px;border-top:1px solid var(--border-dark)}
-    .sticky-cta .store-buttons{gap:8px}
-    .sticky-cta .store-buttons a{font-size:13px;padding:12px 16px;flex:1}
+    /* ===== STICKY MOBILE CTA ===== */
+    .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:998;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);padding:12px 16px 16px;border-top:1px solid var(--border);box-shadow:0 -4px 24px rgba(0,0,0,.1)}
     @media(max-width:768px){.sticky-cta{display:block}}
+    .sticky-cta .btn{width:100%;font-size:14px;padding:15px 24px}
   </style>
 </head>
 <body>
+
+<!-- DOWNLOAD MODAL -->
+<div class="modal-overlay" id="downloadModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <div class="modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" fill="currentColor" stroke="none"/></svg>
+    </div>
+    <h2 class="modal-title">Download OZMAN Free</h2>
+    <p class="modal-sub">Choose your device to start your free 7-day trial. Quick 5-minute setup — no experience needed.</p>
+    <div class="modal-buttons">
+      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" class="modal-btn modal-btn-ios" onclick="fbq('track','Lead');closeModal();">
+        <div class="modal-btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        </div>
+        <div class="modal-btn-text">
+          <small>Download on the</small>
+          <strong>App Store (iPhone)</strong>
+        </div>
+      </a>
+      <div class="modal-divider">or</div>
+      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" class="modal-btn modal-btn-android" onclick="fbq('track','Lead');closeModal();">
+        <div class="modal-btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="color:#3DDC84"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
+        </div>
+        <div class="modal-btn-text">
+          <small>Get it on</small>
+          <strong>Google Play (Android)</strong>
+        </div>
+      </a>
+    </div>
+    <p class="modal-microcopy">🔒 Free 7-Day Trial Included &nbsp;·&nbsp; Cancel Anytime</p>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav class="nav">
@@ -235,12 +319,12 @@
       <a href="#testimonials">Reviews</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a href="#download" class="nav-cta" onclick="fbq('track','Lead');">START FREE TRIAL</a>
+    <button class="nav-cta" onclick="openModal()">START FREE TRIAL</button>
   </div>
 </nav>
 
 <!-- ============================================ -->
-<!-- SECTION 1: HERO (ABOVE THE FOLD) -->
+<!-- SECTION 1: HERO -->
 <!-- ============================================ -->
 <section class="hero" id="hero">
   <div class="con">
@@ -257,32 +341,47 @@
         <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Quote jobs with confidence</li>
         <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> Built for tradies — not accountants</li>
       </ul>
-      <div class="store-buttons" id="download" style="justify-content:flex-start">
-        <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          START FREE TRIAL NOW
-        </a>
-        <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-          START FREE TRIAL NOW
-        </a>
-      </div>
-      <p class="microcopy microcopy-white" style="text-align:left">Free 7-day trial. Quick 5-min setup. Cancel anytime.</p>
-      <div class="trust-row trust-row-white" style="justify-content:flex-start;margin-top:20px">
+      <button class="btn btn-primary" onclick="openModal()" style="margin-bottom:16px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:20px;height:20px"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        START FREE TRIAL NOW
+      </button>
+      <p class="microcopy" style="text-align:left">Free 7-day trial. Quick 5-min setup. Cancel anytime.</p>
+      <div class="trust-row" style="justify-content:flex-start;margin-top:16px">
         <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted by Australian Tradies</span>
         <span>&#x1F4F1; iPhone &amp; Android</span>
       </div>
     </div>
     <div class="hero-right">
-      <img src="assets/promo/tradies_hero.jpg" alt="Two Australian tradies on a construction site using OZMAN" class="hero-phone">
+      <img src="assets/promo/tradies_hero.jpg" alt="Two Australian tradies on a construction site using OZMAN" class="hero-img">
     </div>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 2: PROBLEM / LEAD -->
+<!-- TRUST BAR -->
 <!-- ============================================ -->
-<section class="section section-light text-center">
+<div class="trust-bar">
+  <p class="trust-bar-label">Built for tradies in industries including</p>
+  <div class="trust-logos">
+    <div class="trust-logo-item">
+      <img src="assets/logos/master-builders.jpg" alt="Master Builders Australia">
+    </div>
+    <div class="trust-logo-item">
+      <img src="assets/logos/hia.png" alt="HIA — Housing Industry Association">
+    </div>
+    <div class="trust-logo-item">
+      <img src="assets/logos/neca.png" alt="NECA — National Electrical & Communications Association">
+    </div>
+    <div class="trust-logo-item">
+      <img src="assets/logos/master-plumbers.jpg" alt="Master Plumbers Australia">
+    </div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- SECTION 2: PROBLEM -->
+<!-- ============================================ -->
+<section class="section section-white text-center">
   <div class="con">
     <span class="section-eyebrow">The Real Problem</span>
     <h2 class="section-headline">Let's Be Honest&hellip; You Don't Really Know What You're Making</h2>
@@ -292,11 +391,11 @@
       <p style="margin-top:12px">Materials cost more than expected. Labour runs over.<br>And somehow&hellip; <strong>your profit disappears.</strong></p>
     </div>
     <ul class="pain-list" style="text-align:left">
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> You're quoting jobs based on gut feel</li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Materials blow out and eat your margin</li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> You're working 50&ndash;60 hours with little to show</li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Spreadsheets are too slow and painful</li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Accounting software feels built for someone else</li>
+      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> You're quoting jobs based on gut feel — and losing margin every time</li>
+      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Materials blow out and eat your profit before you even notice</li>
+      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> You're working 50–60 hours a week with little to show for it</li>
+      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Spreadsheets are too slow, painful, and easy to get wrong</li>
+      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg> Accounting software is built for accountants — not for you on site</li>
     </ul>
     <p class="transition-text">If that sounds like your business&hellip; this is exactly what OZMAN fixes.</p>
   </div>
@@ -305,26 +404,19 @@
 <!-- ============================================ -->
 <!-- SECTION 3: SOLUTION -->
 <!-- ============================================ -->
-<section class="section section-dark text-center">
+<section class="section section-blue text-center">
   <div class="con">
-    <span class="section-eyebrow">The Solution</span>
-    <h2 class="section-headline" style="color:var(--text-white)">The Simple Tool That Shows You <span class="hl">Your Real Profit</span> — In Real Time</h2>
+    <span class="section-eyebrow section-eyebrow-white">The Solution</span>
+    <h2 class="section-headline" style="color:#fff">The Simple Tool That Shows You <span style="color:#FCD34D">Your Real Profit</span> — In Real Time</h2>
     <p class="solution-body">OZMAN is a job cost tracking app built specifically for tradies. Not accountants. Not office workers. You open the app, add your job, and track your costs as you go. Materials, labour, everything. And instantly&hellip; you see what you're actually making.</p>
     <ul class="solution-points">
       <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> No spreadsheets</li>
       <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> No complicated setup</li>
       <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> No guessing</li>
     </ul>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-    </div>
+    <button class="btn btn-white" onclick="openModal()">
+      START FREE TRIAL NOW
+    </button>
     <p class="microcopy microcopy-white">Free download. 7-day Pro trial. Quick setup — takes 5 minutes.</p>
   </div>
 </section>
@@ -335,54 +427,45 @@
 <section class="section section-alt text-center" id="how-it-works">
   <div class="con">
     <span class="section-eyebrow">How It Works</span>
-    <h2 class="section-headline">Track Your Job Profit in <span style="color:var(--green)">3 Simple Steps</span></h2>
-    <p class="section-sub">Takes less than 5 minutes to get started</p>
+    <h2 class="section-headline">Track Your Job Profit in <span style="color:var(--primary)">3 Simple Steps</span></h2>
+    <p class="section-sub">Takes less than 5 minutes to get started. No training needed.</p>
     <div class="steps-grid">
       <div class="step-card">
         <div class="step-num">1</div>
         <h3>Create Your Job</h3>
-        <p>Add your job, quote price, and expected costs in under 2 minutes.</p>
-        <span class="step-arrow">&rarr;</span>
+        <p>Add your job name, quote price, and expected costs in under 2 minutes.</p>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <h3>Track Costs On Site</h3>
-        <p>Log materials and labour in seconds — straight from your phone.</p>
-        <span class="step-arrow">&rarr;</span>
+        <p>Log materials and labour in seconds — straight from your phone as you go.</p>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <h3>See Your Profit Instantly</h3>
-        <p>Watch your real profit update live as the job progresses.</p>
+        <p>Watch your real profit update live as the job progresses. No surprises.</p>
       </div>
     </div>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-    </div>
-    <p class="microcopy">No risk. No lock-in. Cancel anytime.</p>
+    <button class="btn btn-primary" onclick="openModal()">
+      START FREE TRIAL NOW
+    </button>
+    <p class="microcopy">Free 7-day trial. Easy setup. Cancel anytime.</p>
   </div>
 </section>
 
 <!-- ============================================ -->
 <!-- SECTION 5: BENEFITS -->
 <!-- ============================================ -->
-<section class="section section-dark text-center" id="features">
+<section class="section section-white text-center" id="features">
   <div class="con">
     <span class="section-eyebrow">Why Tradies Love OZMAN</span>
-    <h2 class="section-headline" style="color:var(--text-white)">Everything You Need to Stop Losing Money on Jobs</h2>
-    <p class="section-sub section-sub-dark">Built for the way you actually work — on site, on your phone, in real time.</p>
+    <h2 class="section-headline">Everything You Need to Stop Losing Money on Jobs</h2>
+    <p class="section-sub">Built for the way you actually work — on site, on your phone, in real time.</p>
     <div class="benefits-grid">
       <div class="benefit-card">
         <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
         <h3>Know Your Profit in Real Time</h3>
-        <p>See exactly what every job is making as it happens — not after it's too late.</p>
+        <p>See exactly what every job is making as it happens — not after it's too late to fix it.</p>
       </div>
       <div class="benefit-card">
         <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
@@ -397,7 +480,7 @@
       <div class="benefit-card">
         <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg></div>
         <h3>Built for On-Site Use</h3>
-        <p>Update everything in seconds from your phone — no office, no laptop needed.</p>
+        <p>Update everything in seconds from your phone — no office, no laptop, no hassle.</p>
       </div>
       <div class="benefit-card">
         <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
@@ -416,174 +499,275 @@
 <!-- ============================================ -->
 <!-- SECTION 6: SOCIAL PROOF -->
 <!-- ============================================ -->
-<section class="section section-light text-center" id="testimonials">
+<section class="section section-alt text-center" id="testimonials">
   <div class="con">
-    <span class="section-eyebrow">Real Tradie Reviews</span>
+    <span class="section-eyebrow">Real Tradies. Real Results.</span>
     <h2 class="section-headline">What Australian Tradies Are Saying</h2>
-    <p class="section-sub">Don't take our word for it — hear from tradies already using OZMAN.</p>
+    <p class="section-sub">Join hundreds of tradies who've stopped guessing and started knowing.</p>
     <div class="testimonials-grid">
       <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"I realised I was undercharging labour by nearly 20%. OZMAN paid for itself in the first job."</blockquote>
-        <div class="testimonial-author">Jason M.</div>
-        <div class="testimonial-role">Builder, Melbourne</div>
+        <blockquote>"I used to finish a job and have no idea if I made money. Now I can see my profit updating in real time. Found out I was undercharging by $400 a job. Game changer."</blockquote>
+        <div class="testimonial-author">Jake M.</div>
+        <div class="testimonial-role">Builder — Melbourne, VIC</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"I've tried Xero — too complicated. This is dead simple and actually useful on site."</blockquote>
-        <div class="testimonial-author">Mark T.</div>
-        <div class="testimonial-role">Plumber, Sydney</div>
+        <blockquote>"Dead simple to use. I'm not a tech guy but I had it set up in 5 minutes. Now I track every job from my phone on site. My quotes are way more accurate now."</blockquote>
+        <div class="testimonial-author">Damo T.</div>
+        <div class="testimonial-role">Plumber — Brisbane, QLD</div>
       </div>
       <div class="testimonial-card">
         <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"I finally know what I'm making per job. That alone changed everything."</blockquote>
+        <blockquote>"Wish I had this 10 years ago. I was losing money on jobs I thought were profitable. OZMAN showed me exactly where it was going. Best $10 a month I spend."</blockquote>
         <div class="testimonial-author">Chris R.</div>
-        <div class="testimonial-role">Electrician, Brisbane</div>
+        <div class="testimonial-role">Electrician — Sydney, NSW</div>
       </div>
     </div>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-    </div>
-    <p class="microcopy">Join hundreds of tradies already tracking smarter.</p>
+    <button class="btn btn-primary" onclick="openModal()">
+      START FREE TRIAL NOW
+    </button>
+    <p class="microcopy">Free 7-day trial. Easy setup. Cancel anytime.</p>
   </div>
 </section>
 
 <!-- ============================================ -->
 <!-- SECTION 7: COMPARISON TABLE -->
 <!-- ============================================ -->
-<section class="section section-alt text-center">
+<section class="section section-white text-center">
   <div class="con">
-    <span class="section-eyebrow">Why OZMAN Wins</span>
-    <h2 class="section-headline">OZMAN vs Everything Else Tradies Try</h2>
-    <p class="section-sub">See why tradies are switching from spreadsheets and accounting software.</p>
-    <table class="comparison-table">
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th class="ozman-col">OZMAN</th>
-          <th>Spreadsheets</th>
-          <th>Accounting Apps</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Real-time job profit tracking</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-        <tr><td>Built for tradies on site</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-        <tr><td>Easy to use on phone</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-        <tr><td>Fast setup (under 5 minutes)</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-        <tr><td>Tracks materials &amp; labour</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td style="color:var(--orange);font-weight:700;text-align:center">&#9888;</td></tr>
-        <tr><td>Helps quote jobs accurately</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-        <tr><td>No accounting knowledge needed</td><td class="ozman-col check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td></tr>
-      </tbody>
-    </table>
+    <span class="section-eyebrow">How We Compare</span>
+    <h2 class="section-headline">OZMAN vs The Old Way</h2>
+    <p class="section-sub">See why tradies are switching from spreadsheets and accounting apps to OZMAN.</p>
+    <div class="comparison-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="ozman-th">&#x2713; OZMAN</th>
+            <th>Spreadsheets</th>
+            <th>Accounting Apps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Real-time job profit tracking</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+          </tr>
+          <tr>
+            <td>Built for tradies on site</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+          </tr>
+          <tr>
+            <td>Track materials &amp; labour instantly</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+          </tr>
+          <tr>
+            <td>Quote &amp; invoice generation</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+            <td><span class="check">&#x2713;</span></td>
+          </tr>
+          <tr>
+            <td>Works from your phone on site</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+            <td>Partial</td>
+          </tr>
+          <tr>
+            <td>No accounting knowledge needed</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+          </tr>
+          <tr>
+            <td>Affordable for sole traders</td>
+            <td class="ozman-col"><span class="check">&#x2713;</span></td>
+            <td><span class="check">&#x2713;</span></td>
+            <td><span class="cross">&#x2717;</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
 <!-- ============================================ -->
 <!-- SECTION 8: 10 REASONS -->
 <!-- ============================================ -->
-<section class="section section-dark text-center">
+<section class="section section-alt text-center">
   <div class="con">
-    <span class="section-eyebrow">The Full Picture</span>
-    <h2 class="section-headline" style="color:var(--text-white)">10 Reasons Smart Tradies Are Switching to OZMAN</h2>
+    <span class="section-eyebrow">10 Reasons to Switch</span>
+    <h2 class="section-headline">Why Smart Tradies Are Choosing OZMAN</h2>
     <div class="reasons-grid">
-      <div class="reason-card"><div class="reason-num">1</div><p>You'll finally see exactly what every job is making, so you stop guessing and start making decisions based on real numbers.</p></div>
-      <div class="reason-card"><div class="reason-num">2</div><p>You'll catch material and labour blowouts early, giving you control before small overruns turn into big profit losses.</p></div>
-      <div class="reason-card"><div class="reason-num">3</div><p>You'll quote jobs properly, knowing your numbers are backed by real data from your previous work.</p></div>
-      <div class="reason-card"><div class="reason-num">4</div><p>You'll get a simple system that works on site — no wasting time with spreadsheets or complicated software after hours.</p></div>
-      <div class="reason-card"><div class="reason-num">5</div><p>You'll feel in control of your business finances instead of constantly wondering where your money is going.</p></div>
-      <div class="reason-card"><div class="reason-num">6</div><p>You'll make faster decisions because all your job costs and profits are visible instantly in one place.</p></div>
-      <div class="reason-card"><div class="reason-num">7</div><p>You'll stop relying on your accountant to tell you what already happened and start seeing what's happening right now.</p></div>
-      <div class="reason-card"><div class="reason-num">8</div><p>You'll get a tool built specifically for tradies, not office workers — it actually fits the way you work.</p></div>
-      <div class="reason-card"><div class="reason-num">9</div><p>You'll see where your most profitable jobs come from, helping you focus on the work that actually grows your business.</p></div>
-      <div class="reason-card"><div class="reason-num">10</div><p>You'll finally have clarity and confidence in your numbers, so you can grow without the constant financial stress.</p></div>
+      <div class="reason-card">
+        <div class="reason-num">1</div>
+        <div>
+          <h4>Stop Losing Money You Don't Know About</h4>
+          <p>Most tradies lose $500–$2,000/month on jobs they think are profitable. OZMAN shows you the truth.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">2</div>
+        <div>
+          <h4>Quote With Real Numbers, Not Guesses</h4>
+          <p>Use actual data from your past jobs to build quotes that protect your margin every time.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">3</div>
+        <div>
+          <h4>Takes 5 Minutes to Get Started</h4>
+          <p>No training. No complicated setup. Open the app, create a job, and start tracking. That's it.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">4</div>
+        <div>
+          <h4>Built for How Tradies Actually Work</h4>
+          <p>On site. On your phone. In the sun. OZMAN is designed for the job site, not the office.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">5</div>
+        <div>
+          <h4>See Your Profit Before the Job Finishes</h4>
+          <p>Catch blowouts early and make decisions while you still can — not after the damage is done.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">6</div>
+        <div>
+          <h4>Know Which Jobs Are Worth Taking</h4>
+          <p>See your most profitable job types and focus on work that actually grows your business.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">7</div>
+        <div>
+          <h4>Professional Quotes &amp; Invoices in Seconds</h4>
+          <p>Generate and send professional documents to clients straight from your phone on site.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">8</div>
+        <div>
+          <h4>Replace Your Messy Spreadsheet Forever</h4>
+          <p>Spreadsheets break, get lost, and take forever. OZMAN is always with you and always accurate.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">9</div>
+        <div>
+          <h4>Works for Any Trade</h4>
+          <p>Builder, plumber, electrician, concreter, painter, landscaper — if you do jobs, OZMAN works for you.</p>
+        </div>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">10</div>
+        <div>
+          <h4>Try It Free for 7 Days</h4>
+          <p>No risk. Start your free trial today and see exactly what you're making on your next job.</p>
+        </div>
+      </div>
     </div>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-    </div>
-    <p class="microcopy microcopy-white">Free 7-day trial. Easy setup. Cancel anytime.</p>
+    <button class="btn btn-primary" onclick="openModal()">
+      START FREE TRIAL NOW
+    </button>
+    <p class="microcopy">Free 7-day trial. Easy setup. Cancel anytime.</p>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 9: WHO THIS IS FOR -->
+<!-- SECTION 9: WHO IS THIS FOR -->
 <!-- ============================================ -->
-<section class="section section-light text-center">
+<section class="section section-white text-center">
   <div class="con">
-    <span class="section-eyebrow">Is This You?</span>
-    <h2 class="section-headline">This Is Built For You If&hellip;</h2>
-    <ul class="who-list">
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span>You're working hard but not seeing real profit at the end — OZMAN gives you clarity on every job so you can finally see where your money is going.</span></li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span>You're quoting jobs based on guesswork and gut feel — we help you base quotes on real data, so you stop undercharging.</span></li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span>You've tried apps before and they were too complicated — OZMAN is built for tradies, simple enough to use on site.</span></li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span>You don't have time for paperwork or spreadsheets — track everything in seconds from your phone.</span></li>
-      <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg> <span>You want to grow your business but don't know what's working — OZMAN shows you exactly which jobs make money.</span></li>
+    <span class="section-eyebrow">Is This For You?</span>
+    <h2 class="section-headline">OZMAN Is Built For You If&hellip;</h2>
+    <ul class="who-list" style="text-align:left">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        You're a self-employed tradie or run a small crew and want to know your real profit on every job
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        You're tired of finishing jobs and not knowing if you actually made money
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        You want to quote more accurately and stop undercharging for your work
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        You need something simple you can use from your phone on site — not a complicated accounting system
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        You want to grow your business and keep more of what you earn
+      </li>
     </ul>
+    <button class="btn btn-primary" onclick="openModal()">
+      START FREE TRIAL NOW
+    </button>
   </div>
 </section>
 
 <!-- ============================================ -->
-<!-- SECTION 10: FAQ / OBJECTION HANDLING -->
+<!-- SECTION 10: FAQ -->
 <!-- ============================================ -->
-<section class="section section-dark text-center" id="faq">
+<section class="section section-alt text-center" id="faq">
   <div class="con">
     <span class="section-eyebrow">Got Questions?</span>
-    <h2 class="section-headline" style="color:var(--text-white)">Frequently Asked Questions</h2>
-    <div class="faq-list">
-      <div class="faq-item open">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>"I'm not a tech person — will I be able to use it?"</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    <h2 class="section-headline">Frequently Asked Questions</h2>
+    <div class="faq-list" style="text-align:left">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is OZMAN hard to use?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">If you can send a text message, you can use OZMAN. It's built to be simple, fast, and easy for tradies working on site. No training needed.</div>
+        <div class="faq-a">Not at all. OZMAN is built for tradies, not accountants. If you can use your phone, you can use OZMAN. Most users are set up and tracking their first job within 5 minutes.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>"I've tried apps before and they never stick."</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Is there really a free trial?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">Those apps weren't built for tradies. OZMAN was designed specifically for how you work — on site, on your phone, in seconds. That's why it sticks.</div>
+        <div class="faq-a">Yes — you get a full 7-day free trial of OZMAN Pro when you download the app. You'll need your Apple or Google account to download from the App Store or Play Store. After the trial, you can choose to subscribe or use the free version.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>How long does setup take?</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          What trades does OZMAN work for?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">Less than 5 minutes. Download the app, create your first job, and start tracking immediately — no complicated setup or training required.</div>
+        <div class="faq-a">OZMAN works for any trade — builders, plumbers, electricians, concreters, painters, tilers, landscapers, carpenters, roofers, HVAC techs, and more. If you do jobs and want to track your costs and profit, OZMAN is for you.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>Will this actually save me money?</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          How much does OZMAN cost after the trial?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">Most tradies discover they've been undercharging or missing costs within their first few jobs. Fixing just one job can save hundreds or thousands per month.</div>
+        <div class="faq-a">OZMAN has flexible pricing plans starting from just a few dollars a month. Most tradies find they save far more than the cost of the subscription in their first week by identifying jobs where they were losing money.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>Is it expensive?</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Can I cancel anytime?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">Free to download with a 7-day Pro trial. After that, it costs less than a coffee a day — but the value comes from the money you stop losing on every job.</div>
+        <div class="faq-a">Yes. You can cancel your subscription at any time through your App Store or Google Play account settings. No lock-in contracts, no cancellation fees.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          <span>Will it work for my type of jobs?</span>
-          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Does it work offline on site?
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
         </div>
-        <div class="faq-a">Yes. OZMAN works for any trade and any job size — from small callouts to large construction projects. Builders, plumbers, sparkies, concreters, painters — it works for all of them.</div>
+        <div class="faq-a">OZMAN is designed to work on your phone on site. As long as you have your phone, you can track costs. The app syncs when you have connectivity.</div>
       </div>
     </div>
   </div>
@@ -593,55 +777,40 @@
 <!-- SECTION 11: FINAL CTA -->
 <!-- ============================================ -->
 <section class="final-cta">
-  <div class="con">
-    <h2 class="final-headline">Stop Guessing Your Numbers.<br><span class="hl">Start Knowing.</span></h2>
-    <p class="final-body">Every job you don't track&hellip; you're losing money without knowing it. OZMAN gives you the truth — instantly. Set up one job today and you'll see exactly what we mean.</p>
-    <div class="store-buttons">
-      <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-      <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-        START FREE TRIAL NOW
-      </a>
-    </div>
-    <p class="microcopy microcopy-white">Free 7-day trial. Easy setup. Cancel anytime.</p>
-    <div class="trust-row trust-row-white" style="margin-top:20px">
-      <span><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trusted by Australian Tradies</span>
-      <span>&#x1F4F1; iPhone &amp; Android</span>
-      <span>&#128274; Free 7-Day Trial Included</span>
-    </div>
+  <div class="con" style="position:relative;z-index:1">
+    <span class="section-eyebrow section-eyebrow-white">Start Today — It's Free</span>
+    <h2 class="final-headline">Stop Guessing Your Numbers.<br>Start Knowing.</h2>
+    <p class="final-body">Every day you go without OZMAN is another day you're working hard without knowing if you're actually making money. Download free today and find out the truth about your business.</p>
+    <button class="btn btn-white" onclick="openModal()" style="font-size:18px;padding:20px 48px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:22px;height:22px"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      START FREE TRIAL NOW
+    </button>
+    <p class="microcopy microcopy-white" style="margin-top:16px">🔒 Free 7-Day Trial &nbsp;·&nbsp; iPhone &amp; Android &nbsp;·&nbsp; Cancel Anytime</p>
   </div>
 </section>
 
-<!-- ============================================ -->
 <!-- FOOTER -->
-<!-- ============================================ -->
 <footer class="footer">
   <div class="footer-inner">
     <div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <img src="assets/ozman-icon.png" alt="OZMAN" style="width:28px;height:28px;border-radius:6px">
-        <span style="font-weight:700;color:var(--text-white);font-size:16px">OZMAN</span>
+        <span style="color:#fff;font-weight:700;font-size:16px">OZMAN</span>
       </div>
-      <p>&copy; 2026 OZMAN. All rights reserved.</p>
-      <p style="margin-top:4px">Contact: <a href="mailto:info.zecongroup@gmail.com" style="color:var(--green);text-decoration:none">info.zecongroup@gmail.com</a></p>
+      <div>&copy; 2025 OZMAN. All rights reserved.</div>
     </div>
     <div class="footer-links">
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
       <a href="support.html">Support</a>
-      <a href="mailto:info.zecongroup@gmail.com">Contact</a>
+      <a href="mailto:info.zecongroup@gmail.com">Contact Us</a>
     </div>
     <div class="footer-social">
-      <!-- Facebook -->
-      <a href="https://www.facebook.com/profile.php?id=61574538042498" target="_blank" rel="noopener" aria-label="Facebook">
+      <a href="https://www.facebook.com/profile.php?id=61572728838353" target="_blank" rel="noopener" aria-label="Facebook">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
       </a>
-      <!-- Instagram -->
-      <a href="https://www.instagram.com/ozaborig/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      <a href="https://www.instagram.com/ozmanofficial_/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
       </a>
     </div>
   </div>
@@ -649,44 +818,43 @@
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
-  <div class="store-buttons">
-    <a href="https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487" onclick="fbq('track','Lead');">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-      iOS
-    </a>
-    <a href="https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share" onclick="fbq('track','Lead');">
-      <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.396 13l2.302-2.492zM5.864 2.658L16.8 9.09l-2.302 2.203L5.864 2.658z"/></svg>
-      Android
-    </a>
-  </div>
+  <button class="btn btn-primary" onclick="openModal()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:18px;height:18px"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+    START FREE TRIAL NOW
+  </button>
 </div>
 
-<!-- Smart redirect script for CTA buttons -->
 <script>
-(function(){
-  // Detect platform for smart redirects
-  function getStoreUrl(){
-    var ua=navigator.userAgent||navigator.vendor||window.opera;
-    if(/android/i.test(ua)) return 'https://play.google.com/store/apps/details?id=space.manus.construction.cost.tracker.t20260307223110&pcampaignid=web_share';
-    if(/iPad|iPhone|iPod/.test(ua)&&!window.MSStream) return 'https://apps.apple.com/au/app/ozman-tradie-cost-tracking/id6760247487';
-    return null; // Desktop - show both
+  // Modal functions
+  function openModal() {
+    document.getElementById('downloadModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    fbq('track', 'Lead');
+  }
+  function closeModal() {
+    document.getElementById('downloadModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // FAQ accordion
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
   }
 
-  // On mobile, make single CTA buttons redirect to correct store
-  var storeUrl=getStoreUrl();
-  if(storeUrl){
-    // On mobile, update all store-buttons to show single button
-    document.querySelectorAll('.store-buttons').forEach(function(container){
-      var links=container.querySelectorAll('a');
-      if(links.length===2){
-        // Hide the wrong platform button
-        var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
-        if(isIOS){links[1].style.display='none';} // Hide Android
-        else{links[0].style.display='none';} // Hide iOS
-      }
-    });
-  }
-})();
+  // Detect device and auto-redirect if mobile
+  (function() {
+    const ua = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+    const isAndroid = /Android/.test(ua);
+    // Store device preference for modal
+    window._deviceOS = isIOS ? 'ios' : (isAndroid ? 'android' : 'desktop');
+  })();
 </script>
 
 </body>

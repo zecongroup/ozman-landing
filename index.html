@@ -64,7 +64,32 @@
     .con{max-width:1100px;margin:0 auto;padding:0 24px}
 
     /* ===== NAV ===== */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
+    /* ===== OFFER BANNER ===== */
+    .offer-banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:#0F172A;border-bottom:2px solid #F59E0B;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+    .offer-banner-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .offer-left{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+    .offer-headline{font-size:15px;font-weight:800;color:#fff;letter-spacing:-0.2px;white-space:nowrap}
+    .offer-headline span{color:#F59E0B}
+    .offer-sub{font-size:11px;color:rgba(255,255,255,.6);font-weight:500}
+    .offer-middle{display:flex;flex-direction:column;gap:5px;flex:1;min-width:160px;max-width:260px}
+    .offer-progress-label{font-size:10px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:0.3px;text-transform:uppercase}
+    .offer-progress-track{height:6px;background:rgba(255,255,255,.12);border-radius:100px;overflow:hidden}
+    .offer-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#F59E0B,#FBBF24);border-radius:100px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+    .offer-timer{display:flex;flex-direction:column;gap:2px;align-items:center}
+    .offer-timer-label{font-size:10px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+    .offer-timer-digits{font-size:18px;font-weight:900;color:#F59E0B;letter-spacing:2px;font-variant-numeric:tabular-nums;font-family:'Inter',monospace}
+    .offer-cta{background:#F59E0B;color:#0F172A;font-weight:800;font-size:13px;padding:10px 20px;border-radius:100px;border:none;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;letter-spacing:0.3px;flex-shrink:0}
+    .offer-cta:hover{background:#FBBF24;transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,158,11,.4)}
+    .offer-cta:active{transform:translateY(0)}
+    @media(max-width:768px){
+      .offer-banner-inner{flex-direction:column;align-items:stretch;gap:8px;padding:10px 16px}
+      .offer-headline{font-size:13px;white-space:normal}
+      .offer-middle{max-width:100%;min-width:0}
+      .offer-timer{flex-direction:row;align-items:center;gap:8px}
+      .offer-timer-digits{font-size:16px}
+      .offer-cta{width:100%;justify-content:center;padding:12px 20px;font-size:14px}
+    }
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px;transition:top .3s ease}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-logo img{width:36px;height:36px;border-radius:8px}
@@ -132,7 +157,7 @@
     .text-center{text-align:center}
 
     /* ===== HERO ===== */
-    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden}
+    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden;transition:padding-top .3s ease}
     .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero::after{content:'';position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,158,11,.07) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero .con{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
@@ -276,6 +301,27 @@
   </style>
 </head>
 <body>
+
+<!-- OFFER BANNER -->
+<div class="offer-banner" id="offerBanner">
+  <div class="offer-banner-inner">
+    <div class="offer-left">
+      <div class="offer-headline">⚡ Early adopters get <span>lifetime pricing — $12.99/mo</span></div>
+      <div class="offer-sub">Once spots are gone, pricing increases permanently</div>
+    </div>
+    <div class="offer-middle">
+      <div class="offer-progress-label"><span id="spotsClaimed">763</span> / 1,000 spots claimed</div>
+      <div class="offer-progress-track">
+        <div class="offer-progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="offer-timer">
+      <div class="offer-timer-label">Offer ends in</div>
+      <div class="offer-timer-digits" id="countdownTimer">00:00:00</div>
+    </div>
+    <button class="offer-cta" onclick="openModal();fbq('track','Lead')">Start Free Trial</button>
+  </div>
+</div>
 
 <!-- DOWNLOAD MODAL -->
 <div class="modal-overlay" id="downloadModal" onclick="if(event.target===this)closeModal()">
@@ -927,6 +973,48 @@
     const isAndroid = /Android/.test(ua);
     // Store device preference for modal
     window._deviceOS = isIOS ? 'ios' : (isAndroid ? 'android' : 'desktop');
+  })();
+
+  // ── OFFER BANNER ──────────────────────────────────────────────────
+  (function() {
+    // Progress bar animation on load
+    window.addEventListener('load', function() {
+      var fill = document.getElementById('progressFill');
+      if (fill) {
+        setTimeout(function() { fill.style.width = '76.3%'; }, 300);
+      }
+    });
+
+    // Countdown timer — resets every 24 hours based on a fixed daily deadline
+    function updateTimer() {
+      var now = new Date();
+      // Set deadline to midnight tonight (end of current day)
+      var deadline = new Date();
+      deadline.setHours(23, 59, 59, 0);
+      var diff = deadline - now;
+      if (diff <= 0) diff = 0;
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+      var el = document.getElementById('countdownTimer');
+      if (el) el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    // Push nav down by banner height and adjust hero padding
+    function adjustOffsets() {
+      var banner = document.getElementById('offerBanner');
+      var nav = document.querySelector('.nav');
+      var hero = document.querySelector('.hero');
+      if (!banner || !nav) return;
+      var bh = banner.offsetHeight;
+      nav.style.top = bh + 'px';
+      if (hero) hero.style.paddingTop = (120 + bh) + 'px';
+    }
+    adjustOffsets();
+    window.addEventListener('resize', adjustOffsets);
   })();
 </script>
 

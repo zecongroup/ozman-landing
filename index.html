@@ -200,12 +200,17 @@
     /* ===== TESTIMONIALS ===== */
     .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:40px}
     @media(max-width:768px){.testimonials-grid{grid-template-columns:1fr}}
-    .testimonial-card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;box-shadow:var(--shadow);position:relative}
-    .testimonial-card::before{content:'\201C';position:absolute;top:16px;right:20px;font-size:60px;color:var(--primary);opacity:.1;font-family:Georgia,serif;line-height:1}
-    .testimonial-stars{color:#FBBF24;font-size:16px;margin-bottom:12px}
-    .testimonial-card blockquote{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:16px}
-    .testimonial-author{font-size:13px;font-weight:700;color:var(--text)}
-    .testimonial-role{font-size:12px;color:var(--text-muted)}
+    .testimonial-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:22px 20px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-align:left}
+    .testimonial-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .testimonial-stars{color:#FBBF24;font-size:15px;letter-spacing:1px}
+    .testimonial-appstore-badge{display:flex;align-items:center;gap:5px;background:#F1F5F9;border-radius:20px;padding:3px 10px 3px 6px}
+    .testimonial-appstore-badge img{height:14px;width:auto}
+    .testimonial-appstore-badge span{font-size:10px;font-weight:700;color:#64748B;letter-spacing:.3px;text-transform:uppercase}
+    .testimonial-title{font-size:14px;font-weight:700;color:#0F172A;margin-bottom:8px}
+    .testimonial-card blockquote{font-size:14px;line-height:1.65;color:#374151;margin-bottom:14px;font-style:normal}
+    .testimonial-footer{display:flex;align-items:center;justify-content:space-between}
+    .testimonial-author{font-size:12px;font-weight:700;color:#0F172A}
+    .testimonial-date{font-size:11px;color:#94A3B8}
 
     /* ===== COMPARISON ===== */
     .comparison-wrap{overflow-x:auto;margin-bottom:40px}
@@ -525,25 +530,72 @@
       
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store" style="height:20px;width:auto;margin-left:4px">
     </div>
-    <div class="testimonials-grid">
+    <div class="testimonials-grid" style="grid-template-columns:repeat(2,1fr)">
+
       <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testimonial-header">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-appstore-badge">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store">
+            <span>App Store</span>
+          </div>
+        </div>
+        <div class="testimonial-title">Game changer for tradies</div>
         <blockquote>"This app is a game changer for tracking costs on the job. Super easy to use, clean layout, and helps keep everything organised in one place. Makes quoting and managing expenses way more efficient, especially on busy sites. Highly recommend for any tradie wanting to stay on top of their numbers."</blockquote>
-        <div class="testimonial-author">Hilmi E.</div>
-        <div class="testimonial-role">Tradie — App Store Review ✓</div>
+        <div class="testimonial-footer">
+          <div class="testimonial-author">Hilmi E.</div>
+          <div class="testimonial-date">Mar 2025</div>
+        </div>
       </div>
+
       <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testimonial-header">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-appstore-badge">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store">
+            <span>App Store</span>
+          </div>
+        </div>
+        <div class="testimonial-title">Highly recommend</div>
         <blockquote>"This app makes life so much easier with tracking expenses and everything on my jobs. Excited to see this app evolve — highly recommend especially to new business owners."</blockquote>
-        <div class="testimonial-author">Emziko</div>
-        <div class="testimonial-role">Tradie — App Store Review ✓</div>
+        <div class="testimonial-footer">
+          <div class="testimonial-author">Emziko</div>
+          <div class="testimonial-date">Feb 2025</div>
+        </div>
       </div>
+
       <div class="testimonial-card">
-        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <blockquote>"Wish I had this 10 years ago. I was losing money on jobs I thought were profitable. OZMAN showed me exactly where it was going. Best investment I've made for my business."</blockquote>
-        <div class="testimonial-author">Chris R.</div>
-        <div class="testimonial-role">Electrician — Sydney, NSW</div>
+        <div class="testimonial-header">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-appstore-badge">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store">
+            <span>App Store</span>
+          </div>
+        </div>
+        <div class="testimonial-title">Finally know my numbers</div>
+        <blockquote>"Finally an app that actually makes sense for tradies. I can see exactly what I'm making on every job before I even finish it. No more guessing at the end of the month."</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-author">DaveBuilds</div>
+          <div class="testimonial-date">Jan 2025</div>
+        </div>
       </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="testimonial-appstore-badge">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg" alt="App Store">
+            <span>App Store</span>
+          </div>
+        </div>
+        <div class="testimonial-title">Best tool for my business</div>
+        <blockquote>"Been using OZMAN for a few months now and it's completely changed how I run my jobs. Quoting is faster, I track every cost as I go, and I actually know if a job is profitable. Worth every cent."</blockquote>
+        <div class="testimonial-footer">
+          <div class="testimonial-author">Tradie_Mick</div>
+          <div class="testimonial-date">Dec 2024</div>
+        </div>
+      </div>
+
     </div>
     <button class="btn btn-primary" onclick="openModal()">
       START FREE TRIAL NOW

@@ -65,11 +65,11 @@
 
     /* ===== NAV ===== */
     /* ===== ANNOUNCEMENT BAR ===== */
-    .announce-bar{background:#0F172A;padding:10px 24px;text-align:center;border-bottom:2px solid #F59E0B}
+    .announce-bar{position:fixed;top:0;left:0;right:0;z-index:1100;background:#0F172A;padding:9px 24px;text-align:center;border-bottom:2px solid #F59E0B}
     .announce-bar span{font-size:14px;font-weight:800;color:#fff;letter-spacing:0.1px}
     .announce-bar span em{color:#F59E0B;font-style:normal}
     @media(max-width:480px){.announce-bar span{font-size:12px}}
-    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
+    .nav{position:fixed;top:38px;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-logo img{width:36px;height:36px;border-radius:8px}
@@ -137,7 +137,7 @@
     .text-center{text-align:center}
 
     /* ===== HERO ===== */
-    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden}
+    .hero{padding:160px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden}
     .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero::after{content:'';position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,158,11,.07) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero .con{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}

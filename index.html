@@ -65,7 +65,7 @@
 
     /* ===== NAV ===== */
     /* ===== OFFER BANNER ===== */
-    .offer-banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:#0F172A;border-bottom:2px solid #F59E0B;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+    .offer-banner{position:relative;z-index:1100;background:#0F172A;border-bottom:2px solid #F59E0B;box-shadow:0 4px 24px rgba(0,0,0,.35)}
     .offer-banner-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
     .offer-left{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
     .offer-headline{font-size:15px;font-weight:800;color:#fff;letter-spacing:-0.2px;white-space:nowrap}
@@ -89,7 +89,7 @@
       .offer-timer-digits{font-size:16px}
       .offer-cta{width:100%;justify-content:center;padding:12px 20px;font-size:14px}
     }
-    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px;transition:top .3s ease}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
     .nav-logo img{width:36px;height:36px;border-radius:8px}
@@ -157,7 +157,7 @@
     .text-center{text-align:center}
 
     /* ===== HERO ===== */
-    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden;transition:padding-top .3s ease}
+    .hero{padding:120px 24px 80px;background:linear-gradient(160deg,#EEF2FF 0%,#F8FAFF 40%,#ffffff 100%);position:relative;overflow:hidden}
     .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero::after{content:'';position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(245,158,11,.07) 0%,transparent 70%);border-radius:50%;pointer-events:none}
     .hero .con{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
@@ -985,13 +985,19 @@
       }
     });
 
-    // Countdown timer — resets every 24 hours based on a fixed daily deadline
+    // Countdown timer — 32 hours from first visit, persisted in localStorage
+    var DURATION_MS = 32 * 60 * 60 * 1000; // 32 hours
+    var storageKey = 'ozman_offer_deadline';
+    var stored = localStorage.getItem(storageKey);
+    var deadline;
+    if (stored) {
+      deadline = parseInt(stored, 10);
+    } else {
+      deadline = Date.now() + DURATION_MS;
+      localStorage.setItem(storageKey, deadline);
+    }
     function updateTimer() {
-      var now = new Date();
-      // Set deadline to midnight tonight (end of current day)
-      var deadline = new Date();
-      deadline.setHours(23, 59, 59, 0);
-      var diff = deadline - now;
+      var diff = deadline - Date.now();
       if (diff <= 0) diff = 0;
       var h = Math.floor(diff / 3600000);
       var m = Math.floor((diff % 3600000) / 60000);
@@ -1003,18 +1009,6 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 
-    // Push nav down by banner height and adjust hero padding
-    function adjustOffsets() {
-      var banner = document.getElementById('offerBanner');
-      var nav = document.querySelector('.nav');
-      var hero = document.querySelector('.hero');
-      if (!banner || !nav) return;
-      var bh = banner.offsetHeight;
-      nav.style.top = bh + 'px';
-      if (hero) hero.style.paddingTop = (120 + bh) + 'px';
-    }
-    adjustOffsets();
-    window.addEventListener('resize', adjustOffsets);
   })();
 </script>
 

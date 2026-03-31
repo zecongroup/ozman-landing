@@ -64,31 +64,11 @@
     .con{max-width:1100px;margin:0 auto;padding:0 24px}
 
     /* ===== NAV ===== */
-    /* ===== OFFER BANNER ===== */
-    .offer-banner{position:relative;z-index:1100;background:#0F172A;border-bottom:2px solid #F59E0B;box-shadow:0 4px 24px rgba(0,0,0,.35)}
-    .offer-banner-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .offer-left{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
-    .offer-headline{font-size:15px;font-weight:800;color:#fff;letter-spacing:-0.2px;white-space:nowrap}
-    .offer-headline span{color:#F59E0B}
-    .offer-sub{font-size:11px;color:rgba(255,255,255,.6);font-weight:500}
-    .offer-middle{display:flex;flex-direction:column;gap:5px;flex:1;min-width:160px;max-width:260px}
-    .offer-progress-label{font-size:10px;color:rgba(255,255,255,.55);font-weight:600;letter-spacing:0.3px;text-transform:uppercase}
-    .offer-progress-track{height:6px;background:rgba(255,255,255,.12);border-radius:100px;overflow:hidden}
-    .offer-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#F59E0B,#FBBF24);border-radius:100px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-    .offer-timer{display:flex;flex-direction:column;gap:2px;align-items:center}
-    .offer-timer-label{font-size:10px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
-    .offer-timer-digits{font-size:18px;font-weight:900;color:#F59E0B;letter-spacing:2px;font-variant-numeric:tabular-nums;font-family:'Inter',monospace}
-    .offer-cta{background:#F59E0B;color:#0F172A;font-weight:800;font-size:13px;padding:10px 20px;border-radius:100px;border:none;cursor:pointer;white-space:nowrap;transition:all .18s;font-family:inherit;text-decoration:none;display:inline-flex;align-items:center;letter-spacing:0.3px;flex-shrink:0}
-    .offer-cta:hover{background:#FBBF24;transform:translateY(-1px);box-shadow:0 6px 20px rgba(245,158,11,.4)}
-    .offer-cta:active{transform:translateY(0)}
-    @media(max-width:768px){
-      .offer-banner-inner{flex-direction:column;align-items:stretch;gap:8px;padding:10px 16px}
-      .offer-headline{font-size:13px;white-space:normal}
-      .offer-middle{max-width:100%;min-width:0}
-      .offer-timer{flex-direction:row;align-items:center;gap:8px}
-      .offer-timer-digits{font-size:16px}
-      .offer-cta{width:100%;justify-content:center;padding:12px 20px;font-size:14px}
-    }
+    /* ===== ANNOUNCEMENT BAR ===== */
+    .announce-bar{background:#0F172A;padding:10px 24px;text-align:center;border-bottom:2px solid #F59E0B}
+    .announce-bar span{font-size:14px;font-weight:800;color:#fff;letter-spacing:0.1px}
+    .announce-bar span em{color:#F59E0B;font-style:normal}
+    @media(max-width:480px){.announce-bar span{font-size:12px}}
     .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 24px}
     .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
     .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
@@ -302,25 +282,9 @@
 </head>
 <body>
 
-<!-- OFFER BANNER -->
-<div class="offer-banner" id="offerBanner">
-  <div class="offer-banner-inner">
-    <div class="offer-left">
-      <div class="offer-headline">⚡ Early adopters get <span>lifetime pricing — $12.99/mo</span></div>
-      <div class="offer-sub">Once spots are gone, pricing increases permanently</div>
-    </div>
-    <div class="offer-middle">
-      <div class="offer-progress-label"><span id="spotsClaimed">763</span> / 1,000 spots claimed</div>
-      <div class="offer-progress-track">
-        <div class="offer-progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-    <div class="offer-timer">
-      <div class="offer-timer-label">Offer ends in</div>
-      <div class="offer-timer-digits" id="countdownTimer">00:00:00</div>
-    </div>
-    <button class="offer-cta" onclick="openModal();fbq('track','Lead')">Start Free Trial</button>
-  </div>
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <span>🔥 <em>Early Adopters Sale:</em> Lifetime Pricing 50% OFF</span>
 </div>
 
 <!-- DOWNLOAD MODAL -->
@@ -975,36 +939,6 @@
     window._deviceOS = isIOS ? 'ios' : (isAndroid ? 'android' : 'desktop');
   })();
 
-  // ── OFFER BANNER ──────────────────────────────────────────────────
-  (function() {
-    // Progress bar animation on load
-    window.addEventListener('load', function() {
-      var fill = document.getElementById('progressFill');
-      if (fill) {
-        setTimeout(function() { fill.style.width = '76.3%'; }, 300);
-      }
-    });
-
-    // Countdown timer — randomised per session, resets on every page visit
-    // Range: 28h 12m to 35h 59m (feels organic, different for every visitor)
-    var minMs = (28 * 60 + 12) * 60 * 1000;
-    var maxMs = (35 * 60 + 59) * 60 * 1000;
-    var randomDuration = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
-    var deadline = Date.now() + randomDuration;
-    function updateTimer() {
-      var diff = deadline - Date.now();
-      if (diff <= 0) diff = 0;
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
-      var el = document.getElementById('countdownTimer');
-      if (el) el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
-    }
-    updateTimer();
-    setInterval(updateTimer, 1000);
-
-  })();
 </script>
 
 </body>

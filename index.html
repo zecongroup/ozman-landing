@@ -23,9 +23,9 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '4355642344696511');
-  fbq('track', 'PageView');
+  // Disable automatic event tracking - using custom events only
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4355642344696511&ev=PageView&noscript=1"/></noscript>
+  <!-- Automatic events disabled; using custom events only -->
   <!-- End Meta Pixel Code -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -918,15 +918,24 @@
     document.getElementById('downloadModal').classList.remove('active');
     document.body.style.overflow = '';
   }
+  function trackPageView() {
+    fbq('track', 'PageView');
+  }
   function trackIOSDownload() {
-    fbq('trackCustom', 'ios_download_click');
+    fbq('track', 'ios_download_click');
   }
   function trackAndroidDownload() {
-    fbq('trackCustom', 'android_download_click');
+    fbq('track', 'android_download_click');
   }
+  // Track PageView on page load
+  window.addEventListener('load', trackPageView);
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeModal();
   });
+  // Fallback: track PageView if load event hasn't fired
+  if (document.readyState === 'complete') {
+    trackPageView();
+  }
 
   // FAQ accordion
   function toggleFaq(el) {

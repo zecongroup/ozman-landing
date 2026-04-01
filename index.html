@@ -24,6 +24,16 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '4355642344696511', { autoConfig: false, disableAutoEvents: true });
   fbq('track', 'PageView');
+  // Block automatic SubscribedButtonClick events
+  fbq('set', 'autoConfig', false, '4355642344696511');
+  window.fbq = (function(originalFbq) {
+    return function(action, ...args) {
+      if (action === 'trackCustom' && args[0] === 'SubscribedButtonClick') {
+        return; // Block this event
+      }
+      return originalFbq(action, ...args);
+    };
+  })(fbq);
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4355642344696511&ev=PageView&noscript=1"/></noscript>
   <!-- End Meta Pixel Code -->

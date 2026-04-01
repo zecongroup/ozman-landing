@@ -22,19 +22,8 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '4355642344696511', { autoConfig: false, disableAutoEvents: true });
+  fbq('init', '4355642344696511');
   fbq('track', 'PageView');
-  // Block only automatic SubscribedButtonClick events, allow all others
-  fbq('set', 'autoConfig', false, '4355642344696511');
-  (function() {
-    const originalFbq = window.fbq;
-    window.fbq = function(action) {
-      if (action === 'trackCustom' && arguments[1] === 'SubscribedButtonClick') {
-        return; // Block SubscribedButtonClick only
-      }
-      return originalFbq.apply(this, arguments); // Allow everything else
-    };
-  })();
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=4355642344696511&ev=PageView&noscript=1"/></noscript>
   <!-- End Meta Pixel Code -->

@@ -912,7 +912,7 @@
   function openModal() {
     document.getElementById('downloadModal').classList.add('active');
     document.body.style.overflow = 'hidden';
-    fbq('track', 'Lead');
+    fbq('trackCustom', 'clicked trial');
   }
   function closeModal() {
     document.getElementById('downloadModal').classList.remove('active');

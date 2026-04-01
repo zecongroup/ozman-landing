@@ -909,10 +909,15 @@
 
 <script>
   // Modal functions
+  let trialClickTracked = false;
   function openModal() {
     document.getElementById('downloadModal').classList.add('active');
     document.body.style.overflow = 'hidden';
-    fbq('trackCustom', 'SubscribedButtonClick');
+    if (!trialClickTracked) {
+      fbq('trackCustom', 'trialbuttonclick');
+      trialClickTracked = true;
+      setTimeout(() => { trialClickTracked = false; }, 1000);
+    }
   }
   function closeModal() {
     document.getElementById('downloadModal').classList.remove('active');

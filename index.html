@@ -910,18 +910,19 @@
 <script>
   // Modal functions
   let trialClickTracked = false;
-  function openModal() {
+  function openModal(event) {
+    if (event) event.stopPropagation();
     document.getElementById('downloadModal').classList.add('active');
     document.body.style.overflow = 'hidden';
     if (!trialClickTracked) {
       fbq('trackCustom', 'trialbuttonclick');
       trialClickTracked = true;
-      setTimeout(() => { trialClickTracked = false; }, 1000);
     }
   }
   function closeModal() {
     document.getElementById('downloadModal').classList.remove('active');
     document.body.style.overflow = '';
+    trialClickTracked = false; // Reset so next click fires event
   }
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeModal();

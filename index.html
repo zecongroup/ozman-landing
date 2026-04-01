@@ -911,7 +911,6 @@
   // Modal functions
   function openModal(event) {
     if (event) event.stopPropagation();
-    fbq('track', 'SubscribeButton');
     document.getElementById('downloadModal').classList.add('active');
     document.body.style.overflow = 'hidden';
   }

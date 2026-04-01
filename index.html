@@ -24,7 +24,12 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '934476019170008');
   fbq('track', 'PageView');
-  fbq('track', 'ViewContent');
+  fbq('track', 'ViewContent', {
+    value: 0,
+    currency: 'AUD',
+    content_id: 'landing_page',
+    content_type: 'product'
+  });
   </script>
   <!-- Automatic events disabled; using custom events only -->
   <!-- End Meta Pixel Code -->

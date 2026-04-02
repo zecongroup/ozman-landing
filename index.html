@@ -23,7 +23,6 @@
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '934476019170008');
-  fbq('track', 'PageView');
   fbq('track', 'ViewContent', {
     value: 0,
     currency: 'AUD',
@@ -986,16 +985,7 @@
     if (e.key === 'Escape') closeModal();
   });
 
-  // Track PageView on page load
-  function trackPageView() {
-    fbq('track', 'PageView');
-  }
-  window.addEventListener('load', trackPageView);
-
-  // Fallback: track PageView if load event hasn't fired
-  if (document.readyState === 'complete') {
-    trackPageView();
-  }
+  // PageView tracking disabled
 
   // FAQ accordion
   function toggleFaq(el) {
